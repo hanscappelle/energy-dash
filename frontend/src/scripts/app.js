@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('youlessAngularD3App', ['ngResource', 'ui.router', 'nvd3ChartDirectives'])
+angular.module('youlessAngularD3App', ['ngResource', 'ui.router', 'nvd3ChartDirectives', 'directives'])
 
     // routes
     .config(function ($stateProvider, $urlRouterProvider) {

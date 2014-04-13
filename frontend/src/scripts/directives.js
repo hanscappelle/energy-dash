@@ -1,6 +1,4 @@
-angular.module('components', [])
-
-    // FIXME this is no longer in use, should be though
+angular.module('directives', [])
 
     // directive for gauge meter visualisation using d3js, from
     // http://bl.ocks.org/msqr/3202712
