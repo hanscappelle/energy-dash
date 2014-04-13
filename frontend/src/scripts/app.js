@@ -2,7 +2,7 @@
 
 angular.module('youlessAngularD3App', ['ngResource', 'ui.router', 'filters', 'controllers', 'directives'])
 
-    // routes
+    // routes configuration
     .config(function ($stateProvider, $urlRouterProvider) {
 
         // For any unmatched url, send to /route1

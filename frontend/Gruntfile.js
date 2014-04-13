@@ -49,11 +49,17 @@ module.exports = function (grunt) {
     watch: {
       templates:{
         files: ['src/views/*.jade'],
-        tasks: ['jade']
+        tasks: ['jade'],
+        options: {
+          livereload: true
+        }
       },
       scripts: {
         files: ['src/scripts/*.js'],
-        tasks: ['uglify']
+        tasks: ['uglify'],
+        options: {
+          livereload: true
+        }
       },
       //js: {
       //  files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],

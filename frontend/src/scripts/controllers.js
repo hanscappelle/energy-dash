@@ -1,6 +1,6 @@
+// all controllers go here
 angular.module('controllers', ['nvd3ChartDirectives'])
 
-    // controllers
     .controller('HistoryCtrl', function ($scope, $http) {
 
         /**

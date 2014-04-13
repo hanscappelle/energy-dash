@@ -1,3 +1,4 @@
+// all app directives in here
 angular.module('directives', [])
 
     // directive for gauge meter visualisation using d3js, from
