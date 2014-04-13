@@ -20,11 +20,15 @@ Import everything from the app folder as is in chrome as an unpackaged chrome ap
 Now open this app in chrome from tools > extensions as an unpackaged chrome app. For this you need to check the
 development options first on that same tab.
 
-### Run as a service with nodeJS
+### Run as a service with grunt/node
 
     npm install
     grunt
     grunt serve
+
+### Deploy on heroku
+
+http://www.sitepoint.com/deploying-yeomanangular-app-heroku/
 
 ## Development Progress
 
