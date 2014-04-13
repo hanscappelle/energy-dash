@@ -41,10 +41,7 @@ Jshint requires 2 spaces as indents for js files to pass.
 ### TODO
 
 * fix safari
-* refine build process (check grunt file)
 * enable tests again
-* enable jshint again
-* fix watch for scripts
 * deploy on heroku or provide instructions on how to deploy it there
 * create guidelines with screenshots
 
@@ -54,6 +51,9 @@ Jshint requires 2 spaces as indents for js files to pass.
 
 ### DONE
 
+* fix watch for scripts
+* enable jshint again
+* refine build process (check grunt file)
 * have items clickable for more detail
 * improve rendering based on screen size (+ package for mobile) => migrate to nvd3 first
 * implement several periods/scopes/resolutions for viewing data => use angular-ui-routes
