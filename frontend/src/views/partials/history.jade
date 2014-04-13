@@ -10,7 +10,7 @@ div(ng-controller="HistoryCtrl")
     h3 Data for one hour {{selectedHour}}
 
     //- easy way of setting a selectable range
-    .btn.btn-default(ng-repeat="n in [] | range:24", ng-click="updateHour($index)", class='{active: $index==selectedHour}') {{$index+1}}
+    .btn.btn-default(ng-repeat="n in [] | range:24", ng-click="updateHour($index)", ng-class='{active: $index==selectedHour}') {{$index+1}}
 
     nvd3-line-chart(
         data="hdata",
@@ -24,7 +24,7 @@ div(ng-controller="HistoryCtrl")
     h3 Data for a day {{selectedDay}}
 
     //- FIXME nr of days in month
-    .btn.btn-default(ng-repeat="n in [] | range:31", ng-click="updateDay($index)", class='{active: $index==selectedDay}')) {{$index+1}}
+    .btn.btn-default(ng-repeat="n in [] | range:31", ng-click="updateDay($index)", ng-class='{active: $index==selectedDay}') {{$index+1}}
 
     nvd3-line-chart(
         data="ddata",
@@ -35,9 +35,9 @@ div(ng-controller="HistoryCtrl")
         xAxisRotateLabels="45")
         svg
 
-    h3 Data for a month
+    h3 Data for a month {{selectedMonth}}
 
-    .btn.btn-default(ng-repeat="n in [] | range:12") {{$index+1}}
+    .btn.btn-default(ng-repeat="n in [] | range:12", ng-click="updateMonth($index)", ng-class='{active: $index==selectedMonth}') {{$index+1}}
 
     //- nvd3-multi-bar-chart(
     nvd3-line-chart(c
