@@ -21,10 +21,10 @@ div(ng-controller="HistoryCtrl")
         xAxisRotateLabels="45")
         svg
 
-    h3 Data for a day
+    h3 Data for a day {{selectedDay}}
 
     //- FIXME nr of days in month
-    .btn.btn-default(ng-repeat="n in [] | range:31") {{$index+1}}
+    .btn.btn-default(ng-repeat="n in [] | range:31", ng-click="updateDay($index)", class='{active: $index==selectedDay}')) {{$index+1}}
 
     nvd3-line-chart(
         data="ddata",
