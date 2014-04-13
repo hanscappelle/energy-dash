@@ -7,7 +7,10 @@ div(ng-controller="HistoryCtrl")
 
     //-p TODO make toggle button for hour, day, month
 
-    h3 Data for one hour
+    h3 Data for one hour {{selectedHour}}
+
+    //- easy way of setting a selectable range
+    .btn.btn-default(ng-repeat="n in [] | range:24", ng-click="updateHour($index)", class='{active: $index==selectedHour}') {{$index+1}}
 
     nvd3-line-chart(
         data="hdata",
@@ -20,6 +23,9 @@ div(ng-controller="HistoryCtrl")
 
     h3 Data for a day
 
+    //- FIXME nr of days in month
+    .btn.btn-default(ng-repeat="n in [] | range:31") {{$index+1}}
+
     nvd3-line-chart(
         data="ddata",
         height="400",
@@ -30,6 +36,8 @@ div(ng-controller="HistoryCtrl")
         svg
 
     h3 Data for a month
+
+    .btn.btn-default(ng-repeat="n in [] | range:12") {{$index+1}}
 
     //- nvd3-multi-bar-chart(
     nvd3-line-chart(c

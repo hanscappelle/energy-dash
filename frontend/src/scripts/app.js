@@ -35,23 +35,9 @@ angular.module('youlessAngularD3App', ['ngResource', 'ui.router', 'nvd3ChartDire
         $scope.getData = function(){
 
             // resolve hour data
-            $http({method: 'GET', url: $scope.config.server+'/V?h=16&j=1'}).
-                success(function(data, status, headers, config) {
-                    // this callback will be called asynchronously
-                    // when the response is available
-
-                    // transform this data to the proper format expected by nvd3
-                    $scope.hdata = [];
-                    $scope.hdata[0] = {key : "Hour Data",
-                        values : []};
-                    for( var key in data.val )
-                        $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) , parseFloat(data.val[key].replace(",","."))]);
-                }).
-                error(function(data, status, headers, config) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                    $scope.error = "failed to fetch data";
-                });
+            // get current hour to use as default instead
+            var now = new Date();
+            $scope.updateHour(now.getHours());
 
             // resolve day data
             $http({method: 'GET', url: $scope.config.server+'/V?d=13&j=1'}).
@@ -84,6 +70,30 @@ angular.module('youlessAngularD3App', ['ngResource', 'ui.router', 'nvd3ChartDire
                      values : []};
                     for( var key in data.val )
                         $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) , parseFloat(data.val[key].replace(",","."))]);
+                }).
+                error(function(data, status, headers, config) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    $scope.error = "failed to fetch data";
+                });
+        }
+
+        $scope.updateHour = function(hour){
+            $scope.selectedHour = hour;
+            // debug
+            console.log('retrieving data with url $s', $scope.config.server+'/V?h='+hour+'&j=1');
+            // ajax
+            $http({method: 'GET', url: $scope.config.server+'/V?h='+hour+'&j=1'}).
+                success(function(data, status, headers, config) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+
+                    // transform this data to the proper format expected by nvd3
+                    $scope.hdata = [];
+                    $scope.hdata[0] = {key : "Hour Data",
+                        values : []};
+                    for( var key in data.val )
+                        $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) , parseFloat(data.val[key].replace(",","."))]);
                 }).
                 error(function(data, status, headers, config) {
                     // called asynchronously if an error occurs
@@ -198,4 +208,14 @@ angular.module('youlessAngularD3App', ['ngResource', 'ui.router', 'nvd3ChartDire
             // go out of edit mode here
             $scope.editSettings = false;
         }
-    });
+    })
+
+.filter('range', function() {
+    return function(input, total) {
+        total = parseInt(total);
+        for (var i=0; i<total; i++) {
+            input.push(i);
+        }
+        return input;
+    };
+});

@@ -15,19 +15,8 @@ angular.module("youlessAngularD3App", [ "ngResource", "ui.router", "nvd3ChartDir
     });
 }).controller("HistoryCtrl", function($scope, $http) {
     $scope.getData = function() {
-        $http({
-            method: "GET",
-            url: $scope.config.server + "/V?h=16&j=1"
-        }).success(function(data, status, headers, config) {
-            $scope.hdata = [];
-            $scope.hdata[0] = {
-                key: "Hour Data",
-                values: []
-            };
-            for (var key in data.val) $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
-        }).error(function(data, status, headers, config) {
-            $scope.error = "failed to fetch data";
-        });
+        var now = new Date();
+        $scope.updateHour(now.getHours());
         $http({
             method: "GET",
             url: $scope.config.server + "/V?d=13&j=1"
@@ -51,6 +40,23 @@ angular.module("youlessAngularD3App", [ "ngResource", "ui.router", "nvd3ChartDir
                 values: []
             };
             for (var key in data.val) $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
+        }).error(function(data, status, headers, config) {
+            $scope.error = "failed to fetch data";
+        });
+    };
+    $scope.updateHour = function(hour) {
+        $scope.selectedHour = hour;
+        console.log("retrieving data with url $s", $scope.config.server + "/V?h=" + hour + "&j=1");
+        $http({
+            method: "GET",
+            url: $scope.config.server + "/V?h=" + hour + "&j=1"
+        }).success(function(data, status, headers, config) {
+            $scope.hdata = [];
+            $scope.hdata[0] = {
+                key: "Hour Data",
+                values: []
+            };
+            for (var key in data.val) $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
         }).error(function(data, status, headers, config) {
             $scope.error = "failed to fetch data";
         });
@@ -117,5 +123,13 @@ angular.module("youlessAngularD3App", [ "ngResource", "ui.router", "nvd3ChartDir
             });
         } else localStorage.setItem("server-config", JSON.stringify($scope.config));
         $scope.editSettings = false;
+    };
+}).filter("range", function() {
+    return function(input, total) {
+        total = parseInt(total);
+        for (var i = 0; i < total; i++) {
+            input.push(i);
+        }
+        return input;
     };
 });
