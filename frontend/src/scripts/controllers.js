@@ -143,15 +143,15 @@ angular.module('controllers', ['nvd3ChartDirectives'])
     var initConfig = function () {
       // packaged chrome apps version
       if (chrome && chrome.storage && chrome.storage.local) {
-        chrome.storage.local.get('server-config', function (data) {
-          if (data.server) {
-            $scope.config = data.server;
+        chrome.storage.local.get('serverConfig', function (data) {
+          if (data.serverConfig) {
+            $scope.config = data.serverConfig;
           }
         });
       }
       // html5 browser version
       else {
-        var config = JSON.parse(localStorage.getItem('server-config'));
+        var config = JSON.parse(localStorage.getItem('serverConfig'));
         // only set when some value found
         if (config) {
           $scope.config = config;
@@ -196,11 +196,11 @@ angular.module('controllers', ['nvd3ChartDirectives'])
       // TODO add validation here
       // save settings in local storage (chrome only?) this is the html5 approach...
       if (chrome && chrome.storage && chrome.storage.local) {
-        chrome.storage.local.set({'server-config': $scope.config});
+        chrome.storage.local.set({'serverConfig': $scope.config});
       }
       // html 5 browsers
       else {
-        localStorage.setItem('server-config', JSON.stringify($scope.config));
+        localStorage.setItem('serverConfig', JSON.stringify($scope.config));
       }
       // go out of edit mode here
       $scope.editSettings = false;

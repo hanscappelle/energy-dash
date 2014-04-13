@@ -89,13 +89,13 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
     };
     var initConfig = function() {
         if (chrome && chrome.storage && chrome.storage.local) {
-            chrome.storage.local.get("server-config", function(data) {
-                if (data.server) {
-                    $scope.config = data.server;
+            chrome.storage.local.get("serverConfig", function(data) {
+                if (data.serverConfig) {
+                    $scope.config = data.serverConfig;
                 }
             });
         } else {
-            var config = JSON.parse(localStorage.getItem("server-config"));
+            var config = JSON.parse(localStorage.getItem("serverConfig"));
             if (config) {
                 $scope.config = config;
             }
@@ -126,10 +126,10 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
     $scope.updateConfig = function() {
         if (chrome && chrome.storage && chrome.storage.local) {
             chrome.storage.local.set({
-                "server-config": $scope.config
+                serverConfig: $scope.config
             });
         } else {
-            localStorage.setItem("server-config", JSON.stringify($scope.config));
+            localStorage.setItem("serverConfig", JSON.stringify($scope.config));
         }
         $scope.editSettings = false;
     };
