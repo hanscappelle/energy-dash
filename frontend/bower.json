@@ -8,7 +8,8 @@
     "jquery": "~1.10.2",
     "bootstrap": "~3.0.3",
     "angular-resource": "1.2.6",
-    "angularjs-nvd3-directives": "~0.0.7"
+    "angularjs-nvd3-directives": "~0.0.7",
+    "angular-ui-router": "latest"
   },
   "devDependencies": {
     "angular-mocks": "1.2.6",

@@ -8,6 +8,14 @@ Angular App for visualisation of youless data with d3js framework.
 
 Import everything from the app folder as is in chrome as an unpackaged chrome app (development option).
 
+    git clone https://github.com/hanscappelle/energy-dash.git
+    cd energy-dash/frontend
+    npm install
+    bower install
+    grunt
+
+
+
 ### Run as a service with nodeJS
 
    npm install
