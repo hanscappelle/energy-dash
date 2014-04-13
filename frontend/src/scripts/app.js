@@ -2,26 +2,26 @@
 
 angular.module('youlessAngularD3App', ['ngResource', 'ui.router', 'filters', 'controllers', 'directives'])
 
-    // routes configuration
-    .config(function ($stateProvider, $urlRouterProvider) {
+  // routes configuration
+  .config(function ($stateProvider, $urlRouterProvider) {
 
-        // For any unmatched url, send to /route1
-        $urlRouterProvider.otherwise("/status")
+    // For any unmatched url, send to /route1
+    $urlRouterProvider.otherwise('/status');
 
-        $stateProvider
+    $stateProvider
 
-            .state('status', {
-                url: "/status",
-                templateUrl: "partials/status.html"
-            })
+      .state('status', {
+        url: '/status',
+        templateUrl: 'partials/status.html'
+      })
 
-            .state('history', {
-                url: "/history",
-                templateUrl: "partials/history.html"
-            })
+      .state('history', {
+        url: '/history',
+        templateUrl: 'partials/history.html'
+      })
 
-            .state('settings', {
-                url: "/settings",
-                templateUrl: "partials/settings.html"
-            })
-    });
+      .state('settings', {
+        url: '/settings',
+        templateUrl: 'partials/settings.html'
+      });
+  });

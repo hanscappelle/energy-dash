@@ -133,7 +133,7 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,*/}*.js'
+        'src/scripts/{,*/}*.js'
       ],
       test: {
         options: {
@@ -206,13 +206,13 @@ module.exports = function (grunt) {
     //},
 
     // Performs rewrites based on rev and the useminPrepare configuration
-    usemin: {
-      //html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
-      options: {
-        assetsDirs: ['<%= yeoman.dist %>']
-      }
-    },
+    //usemin: {
+    //  //html: ['<%= yeoman.dist %>/{,*/}*.html'],
+    //  css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+    //  options: {
+    //    assetsDirs: ['<%= yeoman.dist %>']
+    //  }
+    //},
 
     // The following *-min tasks produce minified files in the dist folder
     imagemin: {
@@ -411,7 +411,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
-    //'newer:jshint',
+    'newer:jshint',
     //'test',
     'build'
   ]);

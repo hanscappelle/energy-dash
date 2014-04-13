@@ -1,209 +1,202 @@
+'use strict';
+
 // all app directives in here
 angular.module('directives', [])
 
-    // directive for gauge meter visualisation using d3js, from
-    // http://bl.ocks.org/msqr/3202712
-    .directive('gauge', function( /* dependencies go here */ ){
+  // directive for gauge meter visualisation using d3js, from
+  // http://bl.ocks.org/msqr/3202712
+  .directive('gauge', function (/* dependencies go here */) {
 
-        // gauge script definition
-        var gauge = function(container, configuration) {
-            var that = {};
-            var config = {
-                size						: 200,
-                clipWidth					: 200,
-                clipHeight					: 110,
-                ringInset					: 20,
-                ringWidth					: 20,
+    // gauge script definition
+    var gauge = function (container, configuration) {
+      var that = {};
+      var config = {
+        size: 200,
+        clipWidth: 200,
+        clipHeight: 110,
+        ringInset: 20,
+        ringWidth: 20,
 
-                pointerWidth				: 10,
-                pointerTailLength			: 5,
-                pointerHeadLengthPercent	: 0.9,
+        pointerWidth: 10,
+        pointerTailLength: 5,
+        pointerHeadLengthPercent: 0.9,
 
-                minValue					: 0,
-                maxValue					: 10,
+        minValue: 0,
+        maxValue: 10,
 
-                minAngle					: -90,
-                maxAngle					: 90,
+        minAngle: -90,
+        maxAngle: 90,
 
-                transitionMs				: 750,
+        transitionMs: 750,
 
-                majorTicks					: 5,
-                labelFormat					: d3.format(',g'),
-                labelInset					: 10,
+        majorTicks: 5,
+        labelFormat: d3.format(',g'),
+        labelInset: 10,
 
-                arcColorFn					: d3.interpolateHsl(d3.rgb('#e8e2ca'), d3.rgb('#3e6c0a'))
-            };
-            var range = undefined;
-            var r = undefined;
-            var pointerHeadLength = undefined;
-            var value = 0;
+        arcColorFn: d3.interpolateHsl(d3.rgb('#e8e2ca'), d3.rgb('#3e6c0a'))
+      };
+      var range, r, pointerHeadLength;
 
-            var svg = undefined;
-            var arc = undefined;
-            var scale = undefined;
-            var ticks = undefined;
-            var tickData = undefined;
-            var pointer = undefined;
+      var svg, arc, scale, ticks, tickData, pointer;
 
-            var donut = d3.layout.pie();
+      function deg2rad(deg) {
+        return deg * Math.PI / 180;
+      }
 
-            function deg2rad(deg) {
-                return deg * Math.PI / 180;
-            }
+      function configure(configuration) {
+        var prop;
+        for (prop in configuration) {
+          config[prop] = configuration[prop];
+        }
 
-            function newAngle(d) {
-                var ratio = scale(d);
-                var newAngle = config.minAngle + (ratio * range);
-                return newAngle;
-            }
+        range = config.maxAngle - config.minAngle;
+        r = config.size / 2;
+        pointerHeadLength = Math.round(r * config.pointerHeadLengthPercent);
 
-            function configure(configuration) {
-                var prop = undefined;
-                for ( prop in configuration ) {
-                    config[prop] = configuration[prop];
-                }
+        // a linear scale that maps domain values to a percent from 0..1
+        scale = d3.scale.linear()
+          .range([0, 1])
+          .domain([config.minValue, config.maxValue]);
 
-                range = config.maxAngle - config.minAngle;
-                r = config.size / 2;
-                pointerHeadLength = Math.round(r * config.pointerHeadLengthPercent);
+        ticks = scale.ticks(config.majorTicks);
+        tickData = d3.range(config.majorTicks).map(function () {
+          return 1 / config.majorTicks;
+        });
 
-                // a linear scale that maps domain values to a percent from 0..1
-                scale = d3.scale.linear()
-                    .range([0,1])
-                    .domain([config.minValue, config.maxValue]);
+        arc = d3.svg.arc()
+          .innerRadius(r - config.ringWidth - config.ringInset)
+          .outerRadius(r - config.ringInset)
+          .startAngle(function (d, i) {
+            var ratio = d * i;
+            return deg2rad(config.minAngle + (ratio * range));
+          })
+          .endAngle(function (d, i) {
+            var ratio = d * (i + 1);
+            return deg2rad(config.minAngle + (ratio * range));
+          });
+      }
 
-                ticks = scale.ticks(config.majorTicks);
-                tickData = d3.range(config.majorTicks).map(function() {return 1/config.majorTicks;});
+      that.configure = configure;
 
-                arc = d3.svg.arc()
-                    .innerRadius(r - config.ringWidth - config.ringInset)
-                    .outerRadius(r - config.ringInset)
-                    .startAngle(function(d, i) {
-                        var ratio = d * i;
-                        return deg2rad(config.minAngle + (ratio * range));
-                    })
-                    .endAngle(function(d, i) {
-                        var ratio = d * (i+1);
-                        return deg2rad(config.minAngle + (ratio * range));
-                    });
-            }
-            that.configure = configure;
+      function centerTranslation() {
+        return 'translate(' + r + ',' + r + ')';
+      }
 
-            function centerTranslation() {
-                return 'translate('+r +','+ r +')';
-            }
+      function isRendered() {
+        return (svg !== undefined);
+      }
 
-            function isRendered() {
-                return (svg !== undefined);
-            }
-            that.isRendered = isRendered;
+      that.isRendered = isRendered;
 
-            function render(newValue) {
-                svg = d3.select(container)
-                    .append('svg:svg')
-                    .attr('class', 'gauge')
-                    .attr('width', config.clipWidth)
-                    .attr('height', config.clipHeight);
+      function render(newValue) {
+        svg = d3.select(container)
+          .append('svg:svg')
+          .attr('class', 'gauge')
+          .attr('width', config.clipWidth)
+          .attr('height', config.clipHeight);
 
-                var centerTx = centerTranslation();
+        var centerTx = centerTranslation();
 
-                var arcs = svg.append('g')
-                    .attr('class', 'arc')
-                    .attr('transform', centerTx);
+        var arcs = svg.append('g')
+          .attr('class', 'arc')
+          .attr('transform', centerTx);
 
-                arcs.selectAll('path')
-                    .data(tickData)
-                    .enter().append('path')
-                    .attr('fill', function(d, i) {
-                        return config.arcColorFn(d * i);
-                    })
-                    .attr('d', arc);
+        arcs.selectAll('path')
+          .data(tickData)
+          .enter().append('path')
+          .attr('fill', function (d, i) {
+            return config.arcColorFn(d * i);
+          })
+          .attr('d', arc);
 
-                var lg = svg.append('g')
-                    .attr('class', 'label')
-                    .attr('transform', centerTx);
-                lg.selectAll('text')
-                    .data(ticks)
-                    .enter().append('text')
-                    .attr('transform', function(d) {
-                        var ratio = scale(d);
-                        var newAngle = config.minAngle + (ratio * range);
-                        return 'rotate(' +newAngle +') translate(0,' +(config.labelInset - r) +')';
-                    })
-                    .text(config.labelFormat);
+        var lg = svg.append('g')
+          .attr('class', 'label')
+          .attr('transform', centerTx);
+        lg.selectAll('text')
+          .data(ticks)
+          .enter().append('text')
+          .attr('transform', function (d) {
+            var ratio = scale(d);
+            var newAngle = config.minAngle + (ratio * range);
+            return 'rotate(' + newAngle + ') translate(0,' + (config.labelInset - r) + ')';
+          })
+          .text(config.labelFormat);
 
-                var lineData = [ [config.pointerWidth / 2, 0],
-                    [0, -pointerHeadLength],
-                    [-(config.pointerWidth / 2), 0],
-                    [0, config.pointerTailLength],
-                    [config.pointerWidth / 2, 0] ];
-                var pointerLine = d3.svg.line().interpolate('monotone');
-                var pg = svg.append('g').data([lineData])
-                    .attr('class', 'pointer')
-                    .attr('transform', centerTx);
+        var lineData = [
+          [config.pointerWidth / 2, 0],
+          [0, -pointerHeadLength],
+          [-(config.pointerWidth / 2), 0],
+          [0, config.pointerTailLength],
+          [config.pointerWidth / 2, 0]
+        ];
+        var pointerLine = d3.svg.line().interpolate('monotone');
+        var pg = svg.append('g').data([lineData])
+          .attr('class', 'pointer')
+          .attr('transform', centerTx);
 
-                pointer = pg.append('path')
-                    .attr('d', pointerLine/*function(d) { return pointerLine(d) +'Z';}*/ )
-                    .attr('transform', 'rotate(' +config.minAngle +')');
+        pointer = pg.append('path')
+          .attr('d', pointerLine/*function(d) { return pointerLine(d) +'Z';}*/)
+          .attr('transform', 'rotate(' + config.minAngle + ')');
 
-                update(newValue === undefined ? 0 : newValue);
-            }
-            that.render = render;
+        update(newValue === undefined ? 0 : newValue);
+      }
 
-            function update(newValue, newConfiguration) {
-                if ( newConfiguration  !== undefined) {
-                    configure(newConfiguration);
-                }
-                var ratio = scale(newValue);
-                var newAngle = config.minAngle + (ratio * range);
-                pointer.transition()
-                    .duration(config.transitionMs)
-                    .ease('elastic')
-                    .attr('transform', 'rotate(' +newAngle +')');
-            }
-            that.update = update;
+      that.render = render;
 
-            configure(configuration);
+      function update(newValue, newConfiguration) {
+        if (newConfiguration !== undefined) {
+          configure(newConfiguration);
+        }
+        var ratio = scale(newValue);
+        var newAngle = config.minAngle + (ratio * range);
+        pointer.transition()
+          .duration(config.transitionMs)
+          .ease('elastic')
+          .attr('transform', 'rotate(' + newAngle + ')');
+      }
 
-            return that;
-        };
+      that.update = update;
 
-        // gauge directive
-        return {
-            restrict: 'E',
-            template:
-                '<div id="power-gauge"></div>',
-            replace: true,
-            link: function(scope, elem, attrs){
+      configure(configuration);
 
-                // FIXME this shouldn't work with ID or we can only have a single gauge on the page...
-                // create a config
-                var powerGauge = gauge('#power-gauge', {
-                    size: 300,
-                    clipWidth: 300,
-                    clipHeight: 300,
-                    ringWidth: 1,
-                    maxValue: 1500,
-                    transitionMs: 4000,
-                    pointerWidth				: 1,
-                    pointerTailLength			: 0,
-                    majorTicks : 10
-                });
+      return that;
+    };
 
-                // initial render
-                powerGauge.render();
+    // gauge directive
+    return {
+      restrict: 'E',
+      template: '<div id="power-gauge"></div>',
+      replace: true,
+      link: function (scope, elem, attrs) {
 
-                scope.$watch(attrs.data, function (data, oldVal) {
+        // FIXME this shouldn't work with ID or we can only have a single gauge on the page...
+        // create a config
+        var powerGauge = gauge('#power-gauge', {
+          size: 300,
+          clipWidth: 300,
+          clipHeight: 300,
+          ringWidth: 1,
+          maxValue: 1500,
+          transitionMs: 4000,
+          pointerWidth: 1,
+          pointerTailLength: 0,
+          majorTicks: 10
+        });
 
-                    // if 'val' is undefined, exit
-                    if (!data) {
-                        return;
-                    }
+        // initial render
+        powerGauge.render();
 
-                    powerGauge.update(data.pwr);
-                });
+        scope.$watch(attrs.data, function (data) {
 
-            }
+          // if 'val' is undefined, exit
+          if (!data) {
+            return;
+          }
 
-        };
-    })
+          powerGauge.update(data.pwr);
+        });
+
+      }
+
+    };
+  });

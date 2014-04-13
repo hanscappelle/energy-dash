@@ -1,5 +1,7 @@
 /*! energy-dash-frontend v0.1.0 2014-04-13 */
-chrome.app.runtime.onLaunched.addListener(function(launchData) {
+"use strict";
+
+chrome.app.runtime.onLaunched.addListener(function() {
     chrome.app.window.create("../index.html", {
         id: "AngularApp",
         bounds: {

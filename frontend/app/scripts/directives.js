@@ -1,4 +1,6 @@
 /*! energy-dash-frontend v0.1.0 2014-04-13 */
+"use strict";
+
 angular.module("directives", []).directive("gauge", function() {
     var gauge = function(container, configuration) {
         var that = {};
@@ -21,27 +23,13 @@ angular.module("directives", []).directive("gauge", function() {
             labelInset: 10,
             arcColorFn: d3.interpolateHsl(d3.rgb("#e8e2ca"), d3.rgb("#3e6c0a"))
         };
-        var range = undefined;
-        var r = undefined;
-        var pointerHeadLength = undefined;
-        var value = 0;
-        var svg = undefined;
-        var arc = undefined;
-        var scale = undefined;
-        var ticks = undefined;
-        var tickData = undefined;
-        var pointer = undefined;
-        var donut = d3.layout.pie();
+        var range, r, pointerHeadLength;
+        var svg, arc, scale, ticks, tickData, pointer;
         function deg2rad(deg) {
             return deg * Math.PI / 180;
         }
-        function newAngle(d) {
-            var ratio = scale(d);
-            var newAngle = config.minAngle + ratio * range;
-            return newAngle;
-        }
         function configure(configuration) {
-            var prop = undefined;
+            var prop;
             for (prop in configuration) {
                 config[prop] = configuration[prop];
             }
@@ -118,7 +106,7 @@ angular.module("directives", []).directive("gauge", function() {
                 majorTicks: 10
             });
             powerGauge.render();
-            scope.$watch(attrs.data, function(data, oldVal) {
+            scope.$watch(attrs.data, function(data) {
                 if (!data) {
                     return;
                 }

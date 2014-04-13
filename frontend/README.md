@@ -28,8 +28,19 @@ development options first on that same tab.
 
 ## Development Progress
 
+### Building
+
+Use grunt for building. With grunt serve resources will be served and livereload will be activated
+
+### Troubleshooting
+
+#### Expected 'url' to have an indentation at 9 instead at 13.
+
+Jshint requires 2 spaces as indents for js files to pass.
+
 ### TODO
 
+* fix safari
 * refine build process (check grunt file)
 * enable tests again
 * enable jshint again

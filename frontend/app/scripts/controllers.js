@@ -1,4 +1,6 @@
 /*! energy-dash-frontend v0.1.0 2014-04-13 */
+"use strict";
+
 angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl", function($scope, $http) {
     $scope.getData = function() {
         var now = new Date();
@@ -12,14 +14,16 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
         $http({
             method: "GET",
             url: $scope.config.server + "/V?h=" + hour + "&j=1"
-        }).success(function(data, status, headers, config) {
+        }).success(function(data) {
             $scope.hdata = [];
             $scope.hdata[0] = {
                 key: "Hour Data",
                 values: []
             };
-            for (var key in data.val) $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
-        }).error(function(data, status, headers, config) {
+            for (var key in data.val) {
+                $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
+            }
+        }).error(function() {
             $scope.error = "failed to fetch data";
         });
     };
@@ -28,14 +32,16 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
         $http({
             method: "GET",
             url: $scope.config.server + "/V?d=" + day + "&j=1"
-        }).success(function(data, status, headers, config) {
+        }).success(function(data) {
             $scope.ddata = [];
             $scope.ddata[0] = {
                 key: "Day Data ",
                 values: []
             };
-            for (var key in data.val) $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
-        }).error(function(data, status, headers, config) {
+            for (var key in data.val) {
+                $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
+            }
+        }).error(function() {
             $scope.error = "failed to fetch data";
         });
     };
@@ -44,32 +50,33 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
         $http({
             method: "GET",
             url: $scope.config.server + "/V?m=" + month + "&j=1"
-        }).success(function(data, status, headers, config) {
+        }).success(function(data) {
             $scope.mdata = [];
             $scope.mdata[0] = {
                 key: "Month Data ",
                 values: []
             };
-            for (var key in data.val) $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
-        }).error(function(data, status, headers, config) {
+            for (var key in data.val) {
+                $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
+            }
+        }).error(function() {
             $scope.error = "failed to fetch data";
         });
     };
     $scope.getData();
     $scope.xAxisTickFormatFunction = function() {
-        return function(d, i) {
+        return function(d) {
             return new Date(d).toUTCString();
         };
     };
 }).controller("StatusCtrl", function($scope, $http) {
-    $scope.status;
     $scope.getStatus = function() {
         $http({
             method: "GET",
             url: $scope.config.server + "/a?j=1"
-        }).success(function(data, status, headers, config) {
+        }).success(function(data) {
             $scope.status = data;
-        }).error(function(data, status, headers, config) {
+        }).error(function() {
             $scope.error = "failed to fetch data";
         });
     };
@@ -83,11 +90,15 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
     var initConfig = function() {
         if (chrome && chrome.storage && chrome.storage.local) {
             chrome.storage.local.get("server-config", function(data) {
-                if (data.server - config) $scope.config = server - config;
+                if (data.server) {
+                    $scope.config = data.server;
+                }
             });
         } else {
             var config = JSON.parse(localStorage.getItem("server-config"));
-            if (config) $scope.config = config;
+            if (config) {
+                $scope.config = config;
+            }
         }
     };
     initConfig();
@@ -95,17 +106,17 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
         $http({
             method: "GET",
             url: $scope.config.server + "/a?mock=1"
-        }).success(function(data, status, headers, config) {
+        }).success(function(data) {
             $scope.status = data;
-        }).error(function(data, status, headers, config) {
+        }).error(function() {
             $scope.error = "failed to fetch data";
         });
         $http({
             method: "GET",
             url: $scope.config.server + "/V?mock=1"
-        }).success(function(data, status, headers, config) {
+        }).success(function(data) {
             $scope.data = data;
-        }).error(function(data, status, headers, config) {
+        }).error(function() {
             $scope.error = "failed to fetch data";
         });
     };
@@ -117,7 +128,9 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
             chrome.storage.local.set({
                 "server-config": $scope.config
             });
-        } else localStorage.setItem("server-config", JSON.stringify($scope.config));
+        } else {
+            localStorage.setItem("server-config", JSON.stringify($scope.config));
+        }
         $scope.editSettings = false;
     };
 });
