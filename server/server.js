@@ -16,12 +16,12 @@ var db = require('monk')(config.databaseUrl)
 
 sp.open(function () {
     // debug
-    console.log('open');
+    console.log('opening serial port');
     sp.on('data', function(data) {
         // debug
         console.log('data received: ' + data);
         // write to db
-        console.log('write data to db');
+        //console.log('write data to db');
         logs.insert({'watts' : data, 'time': new Date().getTime()}, function(err) {
             if( err ) console.log('err conn mongodb: '+err);
             // on suc6 we should return some response that can be checked on the client side
@@ -29,7 +29,8 @@ sp.open(function () {
     });
     sp.write("ls\n", function(err, results) {
         console.log('err: ' + err);
-        console.log('results: ' + results);
+        if( results )
+            console.log('results: ' + results);
     });
 });
 
@@ -41,19 +42,17 @@ var app = express();
 
 // Express settings
 //app.disable('x-powered-by');
-
 // Configuration
 app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-
+//app.use(express.json());
+//app.use(express.urlencoded());
+//app.use(express.methodOverride());
 // TODO implement security
 //app.use(express.cookieParser(config.secret));
 //app.use(express.session());
+//app.use(app.router);
 
-app.use(app.router);
-
+// form http://stackoverflow.com/questions/8067789/how-to-make-web-service-available-for-cross-domain-access
 //CORS middleware
 //var allowCrossDomain = function(req, res, next) {
 //    res.header('Access-Control-Allow-Origin', config.allowedDomains);
@@ -69,11 +68,12 @@ app.all('/*', function(req, res, next) {
     next();
 });
 
-// development only
+// development only, provide proper err handling & logging
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
+// start running service here
 http.createServer(app).listen(config.port, function() {
     console.log("Express server listening on port %d in %s mode", config.port, app.settings.env);
 });
