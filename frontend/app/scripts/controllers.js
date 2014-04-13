@@ -61,8 +61,20 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
             return new Date(d).toUTCString();
         };
     };
-}).controller("AppCtrl", function($scope, $http) {
+}).controller("StatusCtrl", function($scope, $http) {
     $scope.status;
+    $scope.getStatus = function() {
+        $http({
+            method: "GET",
+            url: $scope.config.server + "/a?j=1"
+        }).success(function(data, status, headers, config) {
+            $scope.status = data;
+        }).error(function(data, status, headers, config) {
+            $scope.error = "failed to fetch data";
+        });
+    };
+    $scope.getStatus();
+}).controller("AppCtrl", function($scope, $http) {
     $scope.editSettings = false;
     $scope.config = {
         server: "http://localhost:3000",
@@ -93,16 +105,6 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
             url: $scope.config.server + "/V?mock=1"
         }).success(function(data, status, headers, config) {
             $scope.data = data;
-        }).error(function(data, status, headers, config) {
-            $scope.error = "failed to fetch data";
-        });
-    };
-    $scope.getStatus = function() {
-        $http({
-            method: "GET",
-            url: $scope.config.server + "/a?j=1"
-        }).success(function(data, status, headers, config) {
-            $scope.status = data;
         }).error(function(data, status, headers, config) {
             $scope.error = "failed to fetch data";
         });

@@ -19,15 +19,15 @@ Import everything from the app folder as is in chrome as an unpackaged chrome ap
 * refine build process (check grunt file)
 * enable tests again
 * enable jshint again
+* fix watch for scripts
 
 ### nice to have
 
 * add transition effects to graphs
-* have items clickable for more detail
-* improve code in general
 
 ## DONE
 
+* have items clickable for more detail
 * improve rendering based on screen size (+ package for mobile) => migrate to nvd3 first
 * implement several periods/scopes/resolutions for viewing data => use angular-ui-routes
 * move controllers to separate files

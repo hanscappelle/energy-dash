@@ -98,15 +98,41 @@ angular.module('controllers', ['nvd3ChartDirectives'])
 
     })
 
-    .controller('AppCtrl', function ($scope, $http) {
-
+    .controller('StatusCtrl', function($scope, $http){
         // the current status data
         $scope.status;
+
+        /**
+         * get status from REST interface
+         */
+        $scope.getStatus = function () {
+
+            // FIXME implement actual status fetching on server side
+            $http({method: 'GET', url: $scope.config.server + '/a?j=1'})
+                .success(function (data, status, headers, config) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    $scope.status = data;
+                })
+                .error(function (data, status, headers, config) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    $scope.error = "failed to fetch data";
+                });
+        }
+
+        // resolve on load
+        $scope.getStatus();
+    })
+
+    .controller('AppCtrl', function ($scope, $http) {
+
+        // TODO use ui.bootstrap for alerts instead of error that is now on scope
 
         // settings editing flag
         $scope.editSettings = false;
 
-        // the configuration
+        // the default configuration
         $scope.config = {
             server: 'http://localhost:3000',
             password: ''
@@ -152,24 +178,6 @@ angular.module('controllers', ['nvd3ChartDirectives'])
                     $scope.data = data;
                 })
                 .error(function (data, status, headers, config) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                    $scope.error = "failed to fetch data";
-                });
-        }
-
-        /**
-         * get status from REST interface
-         */
-        $scope.getStatus = function () {
-            $http({method: 'GET', url: $scope.config.server + '/a?j=1'
-            }).
-                success(function (data, status, headers, config) {
-                    // this callback will be called asynchronously
-                    // when the response is available
-                    $scope.status = data;
-                }).
-                error(function (data, status, headers, config) {
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
                     $scope.error = "failed to fetch data";
