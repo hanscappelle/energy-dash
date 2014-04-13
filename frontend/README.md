@@ -1,8 +1,8 @@
 # About
 
-Angular App for visualisation of youless(-mockup) data with d3js framework.
+Angular App for visualisation of youless data with d3js framework.
 
-## Gettings Started
+## Getting Started
 
 ### Run as chrome app
 

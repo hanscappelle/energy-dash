@@ -1,5 +1,4 @@
-h2
-    | Device parameters
+h2 Device parameters
     button.btn.btn-primary(ng-click='enableEditSettings()', ng-if='!editSettings') Update
     button.btn.btn-primary(ng-click='updateConfig()', ng-if='editSettings') Save
 form(name='settingsForm')
@@ -7,7 +6,7 @@ form(name='settingsForm')
         | data server:
         label(ng-if='!editSettings') {{config.server}}
         input(ng-show='editSettings', type='text', name='server', ng-model='config.server')
-// not allowed for chrome apps
+    //- FIXME not allowed for chrome apps
         required/>
         <span class="error" ng-show="settingsForm.server.$error.required">Required!</span>
 p

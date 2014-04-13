@@ -1,4 +1,4 @@
-/*! youless-angular-d3 v0.1.0 2014-04-13 */
+/*! energy-dash-frontend v0.1.0 2014-04-13 */
 chrome.app.runtime.onLaunched.addListener(function(launchData) {
     chrome.app.window.create("../index.html", {
         id: "AngularApp",

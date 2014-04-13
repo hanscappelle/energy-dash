@@ -1,4 +1,4 @@
-/*! youless-angular-d3 v0.1.0 2014-04-13 */
+/*! energy-dash-frontend v0.1.0 2014-04-13 */
 angular.module("components", []).directive("barChart", function() {
     return {
         restrict: "E",
