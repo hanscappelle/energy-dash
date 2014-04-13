@@ -63,7 +63,7 @@ module.exports = function (grunt) {
       },
       //js: {
       //  files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-      //  tasks: ['newer:jshint:all'],
+      //  tasks: ['newer:jshint:all']
       //  options: {
       //    livereload: true
       //  }
@@ -198,16 +198,16 @@ module.exports = function (grunt) {
     // Reads HTML for usemin blocks to enable smart builds that automatically
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
-    useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
-      options: {
-        dest: '<%= yeoman.dist %>'
-      }
-    },
+    //useminPrepare: {
+    //  html: '<%= yeoman.app %>/index.html',
+    //  options: {
+    //    dest: '<%= yeoman.dist %>'
+    //  }
+    //},
 
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
-      html: ['<%= yeoman.dist %>/{,*/}*.html'],
+      //html: ['<%= yeoman.dist %>/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
         assetsDirs: ['<%= yeoman.dist %>']
@@ -235,22 +235,22 @@ module.exports = function (grunt) {
         }]
       }
     },
-    htmlmin: {
-      dist: {
-        options: {
-          collapseWhitespace: true,
-          collapseBooleanAttributes: true,
-          removeCommentsFromCDATA: true,
-          removeOptionalTags: true
-        },
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.dist %>',
-          src: ['*.html', 'views/{,*/}*.html'],
-          dest: '<%= yeoman.dist %>'
-        }]
-      }
-    },
+    //htmlmin: {
+    //  dist: {
+    //    options: {
+    //      collapseWhitespace: true,
+    //      collapseBooleanAttributes: true,
+    //      removeCommentsFromCDATA: true,
+    //      removeOptionalTags: true
+    //    },
+    //    files: [{
+    //      expand: true,
+    //      cwd: '<%= yeoman.dist %>',
+    //      src: ['*.html', 'views/{,*/}*.html'],
+    //      dest: '<%= yeoman.dist %>'
+    //    }]
+    //  }
+    //},
 
     // Allow the use of non-minsafe AngularJS files. Automatically makes it
     // minsafe compatible so Uglify does not destroy the ng references
