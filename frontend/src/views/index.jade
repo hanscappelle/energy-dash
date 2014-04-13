@@ -1,0 +1,63 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        title Youless Visualisation
+
+        // Bootstrap
+        link(rel="stylesheet", href="bower_components/bootstrap/dist/css/bootstrap.css")
+        link(rel="stylesheet", href="bower_components/nvd3/src/nv.d3.css")
+        link(rel='stylesheet', href='styles/main.css')
+
+    body(ng-app="youlessAngularD3App")
+
+        div(ng-controller='AppCtrl')
+
+            //- navigation
+            nav.navbar.navbar-default(role="navigation")
+                .container-fluid
+                    .navbar-header
+                        button.navbar-toggle(type="button", data-toggle="collapse", data-target="#bs-example-navbar-collapse-1")
+                            span.sr-only Toggle navigation
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                        a.navbar-brand(href="#") Brand
+
+                    .collapse.navbar-collapse#bs-example-navbar-collapse-1
+                        ul.nav.navbar-nav
+                            li(ui-sref-active='active')
+                                a(ui-sref='status') Status
+                            li(ui-sref-active='active')
+                                a(ui-sref='history') History
+                            li(ui-sref-active='active')
+                                a(ui-sref='settings') Settings
+
+            //- alerts go here
+            p.alert-warning(ng-if='error') Error: {{error}}
+
+            //- view container
+            .container-fluid(ui-view)
+
+
+        //if lt IE 9
+            script(src='bower_components/es5-shim/es5-shim.js')
+            script(src='bower_components/json3/lib/json3.min.js')
+
+        script(src='bower_components/jquery/jquery.js')
+        script(src='bower_components/angular/angular.js')
+        script(src='bower_components/bootstrap/dist/js/bootstrap.js')
+        script(src='bower_components/angular-resource/angular-resource.js')
+        script(src='bower_components/angular-ui-router/release/angular-ui-router.js')
+
+        script(src='bower_components/d3/d3.js')
+        script(src='bower_components/nvd3/nv.d3.js')
+        script(src='bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js')
+
+        script(src='scripts/app.js')
+        //script(src='scripts/controllers/main.js')
+
+        //script(src='js/lib/moment.min.js')
+        //script(src='js/components.js')

@@ -1,0 +1,32 @@
+h2 Status
+    button.btn.btn-primary(ng-click='getStatus()') Fetch status
+    button.btn.btn-info(ng-click='getDummyData()') Load dummy data
+    button.btn.btn-info(ng-click='extraFields=!extraFields')
+        | {{extraFields?'Hide':'Show'}} all fields
+    button.btn.btn-info(ng-click='showJson=!showJson') {{showJson?'Hide':'Show'}} JSON
+    .container-fluid
+        .row
+            .col-sm-6
+                h2 Gauge Visualisation
+                gauge(data='status')
+            .col-sm-6
+                h2 Parameters
+                p
+                    b
+                        | counter in kWh: {{status.cnt}}
+                        br
+                        | Power consumption in Watt: {{status.pwr}}
+                    span(ng-if='extraFields')
+                        br
+                        | moving average level: {{status.lvl}}
+                        br
+                        | deviation of reflection: {{status.dev}}
+                        br
+                        | connection status: {{status.con}}
+                        br
+                        | Time until next status update with online monitoring: {{status.sts}}
+                        br
+                        | raw 10-bit light reflection level (without averaging): {{status.raw}}
+    p(ng-if='showJson')
+        | Status (raw data):
+        code {{status}}
