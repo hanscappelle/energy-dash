@@ -22,9 +22,9 @@ development options first on that same tab.
 
 ### Run as a service with nodeJS
 
-   npm install
-   grunt
-   grunt serve
+    npm install
+    grunt
+    grunt serve
 
 ## Development Progress
 
