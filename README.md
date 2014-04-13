@@ -3,6 +3,8 @@ energy-dash
 
 Energy Monitoring Dashboard with youless API support
 
+![dashboard screenshot](https://dl.dropboxusercontent.com/u/30939008/remo/Screen%20Shot%202014-04-13%20at%2023.46.00.png)
+
 * Youless API documentation: http://wiki.td-er.nl/index.php?title=YouLess
 * Graphs rendering: https://github.com/cmaurer/angularjs-nvd3-directives
 
