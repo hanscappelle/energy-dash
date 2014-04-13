@@ -110,7 +110,7 @@ app.get('/V', function(req, res){
 
     // real data
 
-    // TODO better alignment wit youless formats? Or at least merge youless formats here
+    // TODO better alignment wit youless formats? Or at least merge youless formats here, have youless api comp as flag configurable on both ends
 
     // h for all results of one hour of day
     if( req.query.h ){

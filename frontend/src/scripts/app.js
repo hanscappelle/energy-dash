@@ -33,17 +33,57 @@ angular.module('youlessAngularD3App', ['ngResource', 'ui.router', 'nvd3ChartDire
          * get graph data from REST interface
          */
         $scope.getData = function(){
+
+            // resolve hour data
+            $http({method: 'GET', url: $scope.config.server+'/V?h=16&j=1'}).
+                success(function(data, status, headers, config) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+
+                    // transform this data to the proper format expected by nvd3
+                    $scope.hdata = [];
+                    $scope.hdata[0] = {key : "Hour Data",
+                        values : []};
+                    for( var key in data.val )
+                        $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) , parseFloat(data.val[key].replace(",","."))]);
+                }).
+                error(function(data, status, headers, config) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    $scope.error = "failed to fetch data";
+                });
+
+            // resolve day data
+            $http({method: 'GET', url: $scope.config.server+'/V?d=13&j=1'}).
+                success(function(data, status, headers, config) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+
+                    // transform this data to the proper format expected by nvd3
+                    $scope.ddata = [];
+                    $scope.ddata[0] = {key : "Day Data ",
+                        values : []};
+                    for( var key in data.val )
+                        $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) , parseFloat(data.val[key].replace(",","."))]);
+                }).
+                error(function(data, status, headers, config) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    $scope.error = "failed to fetch data";
+                });
+
+            // resolve month data
             $http({method: 'GET', url: $scope.config.server+'/V?m=3&j=1'}).
                 success(function(data, status, headers, config) {
                     // this callback will be called asynchronously
                     // when the response is available
 
                     // transform this data to the proper format expected by nvd3
-                    $scope.data = [];
-                    $scope.data[0] = {key : "Series 2",
+                    $scope.mdata = [];
+                    $scope.mdata[0] = {key : "Month Data ",
                      values : []};
                     for( var key in data.val )
-                        $scope.data[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) , parseFloat(data.val[key].replace(",","."))]);
+                        $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) , parseFloat(data.val[key].replace(",","."))]);
                 }).
                 error(function(data, status, headers, config) {
                     // called asynchronously if an error occurs
@@ -51,8 +91,6 @@ angular.module('youlessAngularD3App', ['ngResource', 'ui.router', 'nvd3ChartDire
                     $scope.error = "failed to fetch data";
                 });
         }
-
-        // TODO dummy data using d param on requests
 
         // retrieve data on load
         $scope.getData();
@@ -70,7 +108,6 @@ angular.module('youlessAngularD3App', ['ngResource', 'ui.router', 'nvd3ChartDire
 
         // the current status data
         $scope.status;
-        $scope.data;
 
         // settings editing flag
         $scope.editSettings = false;

@@ -17,14 +17,40 @@ angular.module("youlessAngularD3App", [ "ngResource", "ui.router", "nvd3ChartDir
     $scope.getData = function() {
         $http({
             method: "GET",
-            url: $scope.config.server + "/V?m=3&j=1"
+            url: $scope.config.server + "/V?h=16&j=1"
         }).success(function(data, status, headers, config) {
-            $scope.data = [];
-            $scope.data[0] = {
-                key: "Series 2",
+            $scope.hdata = [];
+            $scope.hdata[0] = {
+                key: "Hour Data",
                 values: []
             };
-            for (var key in data.val) $scope.data[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
+            for (var key in data.val) $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
+        }).error(function(data, status, headers, config) {
+            $scope.error = "failed to fetch data";
+        });
+        $http({
+            method: "GET",
+            url: $scope.config.server + "/V?d=13&j=1"
+        }).success(function(data, status, headers, config) {
+            $scope.ddata = [];
+            $scope.ddata[0] = {
+                key: "Day Data ",
+                values: []
+            };
+            for (var key in data.val) $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
+        }).error(function(data, status, headers, config) {
+            $scope.error = "failed to fetch data";
+        });
+        $http({
+            method: "GET",
+            url: $scope.config.server + "/V?m=3&j=1"
+        }).success(function(data, status, headers, config) {
+            $scope.mdata = [];
+            $scope.mdata[0] = {
+                key: "Month Data ",
+                values: []
+            };
+            for (var key in data.val) $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
         }).error(function(data, status, headers, config) {
             $scope.error = "failed to fetch data";
         });
@@ -37,7 +63,6 @@ angular.module("youlessAngularD3App", [ "ngResource", "ui.router", "nvd3ChartDir
     };
 }).controller("AppCtrl", function($scope, $http) {
     $scope.status;
-    $scope.data;
     $scope.editSettings = false;
     $scope.config = {
         server: "http://localhost:3000",
