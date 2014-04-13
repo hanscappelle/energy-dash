@@ -5,7 +5,7 @@ div(ng-controller="HistoryCtrl")
         button.btn.btn-info(ng-click='getDummyData()') Load dummy data
         button.btn.btn-info(ng-click='showJson=!showJson') {{showJson?'Hide':'Show'}} JSON
 
-    p TODO make toggle button for hour, day, month
+    //-p TODO make toggle button for hour, day, month
 
     nvd3-line-chart(
         data="data",
@@ -16,7 +16,7 @@ div(ng-controller="HistoryCtrl")
         xAxisRotateLabels="45")
         svg
 
-    nvd3-multi-bar-chart(
+    //-nvd3-multi-bar-chart(
         data="data",
         id="exampleId",
         xAxisTickFormat="xAxisTickFormatFunction()",

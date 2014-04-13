@@ -1,8 +1,6 @@
 'use strict';
 
-angular.module('youlessAngularD3App', [
-        'ngResource', 'ui.router', 'nvd3ChartDirectives'
-    ])
+angular.module('youlessAngularD3App', ['ngResource', 'ui.router', 'nvd3ChartDirectives'])
 
     // routes
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -31,18 +29,11 @@ angular.module('youlessAngularD3App', [
     // controllers TODO move these to separate files
     .controller('HistoryCtrl', function ($scope, $http) {
 
-        // TODO move config to config file instead or from app storage
-        $scope.config = {
-            server: 'http://localhost:3000',
-            password: ''
-        }
-
-        // resolve this from live data
         /**
          * get graph data from REST interface
          */
         $scope.getData = function(){
-            $http({method: 'GET', url: $scope.config.server+'/V?m=1&j=1'}).
+            $http({method: 'GET', url: $scope.config.server+'/V?m=3&j=1'}).
                 success(function(data, status, headers, config) {
                     // this callback will be called asynchronously
                     // when the response is available
@@ -79,6 +70,7 @@ angular.module('youlessAngularD3App', [
 
         // the current status data
         $scope.status;
+        $scope.data;
 
         // settings editing flag
         $scope.editSettings = false;
@@ -140,13 +132,6 @@ angular.module('youlessAngularD3App', [
          */
         $scope.getStatus = function () {
             $http({method: 'GET', url: $scope.config.server + '/a?j=1'
-                // http://stackoverflow.com/questions/21102690/angularjs-not-detecting-access-control-allow-origin-header
-                /*
-                 ,headers:{
-                 'Access-Control-Allow-Origin': '*',
-                 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-                 'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With'
-                 } */
             }).
                 success(function (data, status, headers, config) {
                     // this callback will be called asynchronously

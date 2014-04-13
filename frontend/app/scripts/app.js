@@ -14,14 +14,10 @@ angular.module("youlessAngularD3App", [ "ngResource", "ui.router", "nvd3ChartDir
         templateUrl: "partials/settings.html"
     });
 }).controller("HistoryCtrl", function($scope, $http) {
-    $scope.config = {
-        server: "http://localhost:3000",
-        password: ""
-    };
     $scope.getData = function() {
         $http({
             method: "GET",
-            url: $scope.config.server + "/V?m=1&j=1"
+            url: $scope.config.server + "/V?m=3&j=1"
         }).success(function(data, status, headers, config) {
             $scope.data = [];
             $scope.data[0] = {
@@ -41,6 +37,7 @@ angular.module("youlessAngularD3App", [ "ngResource", "ui.router", "nvd3ChartDir
     };
 }).controller("AppCtrl", function($scope, $http) {
     $scope.status;
+    $scope.data;
     $scope.editSettings = false;
     $scope.config = {
         server: "http://localhost:3000",
