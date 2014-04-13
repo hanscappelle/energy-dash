@@ -5,7 +5,7 @@
   "minimum_chrome_version": "29",
   "app": {
     "background": {
-      "scripts": ["js/background.js"]
+      "scripts": ["scripts/background.js"]
     }
   },
   "permissions": [
