@@ -16,14 +16,9 @@ Import everything from the app folder as is in chrome as an unpackaged chrome ap
 
 ## TODO
 
-* implement several periods/scopes/resolutions for viewing data => use angular-ui-routes
-* improve rendering based on screen size (+ package for mobile) => migrate to nvd3 first
-
 * refine build process (check grunt file)
-* test graphs
 * enable tests again
 * enable jshint again
-* move controllers to separate files
 
 ### nice to have
 
@@ -33,6 +28,10 @@ Import everything from the app folder as is in chrome as an unpackaged chrome ap
 
 ## DONE
 
+* improve rendering based on screen size (+ package for mobile) => migrate to nvd3 first
+* implement several periods/scopes/resolutions for viewing data => use angular-ui-routes
+* move controllers to separate files
+* test graphs
 * create project structure
 * fix bootstrap
 * get angular en d3js scripts downloaded
