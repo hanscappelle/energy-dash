@@ -57,7 +57,6 @@ it when running the server.
 
     NODE_ENV=production node server.js
 
-
 ## Troubleshooting
 
 ### Fix for using monk on arm

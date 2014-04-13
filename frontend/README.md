@@ -1,20 +1,24 @@
 # About
 
-Angular App for visualisation of youless data with d3js framework.
+Angular App for visualisation of energy monitoring data with d3js framework. This app supports the youless data format.
 
 ## Getting Started
+
+Get the sources from github
+
+    git clone https://github.com/hanscappelle/energy-dash.git
 
 ### Run as chrome app
 
 Import everything from the app folder as is in chrome as an unpackaged chrome app (development option).
 
-    git clone https://github.com/hanscappelle/energy-dash.git
     cd energy-dash/frontend
     npm install
     bower install
     grunt
 
-
+Now open this app in chrome from tools > extensions as an unpackaged chrome app. For this you need to check the
+development options first on that same tab.
 
 ### Run as a service with nodeJS
 
@@ -22,18 +26,22 @@ Import everything from the app folder as is in chrome as an unpackaged chrome ap
    grunt
    grunt serve
 
-## TODO
+## Development Progress
+
+### TODO
 
 * refine build process (check grunt file)
 * enable tests again
 * enable jshint again
 * fix watch for scripts
+* deploy on heroku or provide instructions on how to deploy it there
+* create guidelines with screenshots
 
-### nice to have
+#### nice to have
 
 * add transition effects to graphs
 
-## DONE
+### DONE
 
 * have items clickable for more detail
 * improve rendering based on screen size (+ package for mobile) => migrate to nvd3 first
@@ -57,7 +65,7 @@ Some minor tweaks though and let's not forget this js implementation can run on 
 Found 2 minimal projects for this [https://gist.github.com/tomerd/1499279] is nice
 but the gauge example at [http://bl.ocks.org/msqr/3202712] had numbers instead of ticks already in place so picked that one.
 
-## Resources
+## Just Resources
 
 * http://angularjs.org/
 * http://d3js.org/
