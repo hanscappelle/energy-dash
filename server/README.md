@@ -58,7 +58,9 @@ it when running the server.
     NODE_ENV=production node server.js
 
 
-## Fix for using monk on arm
+## Troubleshooting
+
+### Fix for using monk on arm
 
 I ran into a Bus Error when trying to connect with a remote mongodb (using monk) on arm (raspberry pi). This turned out to be a [resolved issue for bson](https://github.com/mongodb/js-bson/issues/37). However monk reliese on an older version of mongoskin that doesn't include this fix yet. 
 
@@ -78,6 +80,12 @@ Change #define USE_MISALIGNED_MEMORY_ACCESS from 1 to 0
     node-gyp rebuild
 
 More info at http://stackoverflow.com/questions/16746134/bus-error-on-mongodb-mongoclient-connect-for-raspberry-pi-arm
+
+### RangeError: Maximum call stack size exceeded
+
+Even on Mac I got errors due to monk configuration. After running npm install go into the node_modules directory
+and change the mongoskin dependency in the package.json file from 0.4.4 to 0.6.1. Now execute npm install from
+within the node_modules/monk directory.
 
 ## Open points
 
