@@ -1,19 +1,30 @@
-h2 Device parameters
+h2 Application Settings
     button.btn.btn-primary(ng-click='enableEditSettings()', ng-if='!editSettings') Update
     button.btn.btn-primary(ng-click='updateConfig()', ng-if='editSettings') Save
-form(name='settingsForm')
-    p data server:
-        label(ng-if='!editSettings') {{config.server}}
-        input(ng-show='editSettings', type='text', name='server', ng-model='config.server')
-    //- FIXME not allowed for chrome apps
-        required/>
-        <span class="error" ng-show="settingsForm.server.$error.required">Required!</span>
-    p password:
-        label(ng-if='!editSettings') *****
-        input(ng-show='editSettings', type='password', name='password', ng-model='config.password')
-        span (TODO this isn't implemented yet)
 
-    p status gauge max:
-        label(ng-if='!editSettings') {{config.gaugeMax}}
-        input(ng-show='editSettings', type='text', name='gaugeMax', ng-model='config.gaugeMax')
-        span (TODO this isn't implemented yet)
+form.container-fluid(name='settingsForm')
+
+    h3 Youless device settings
+    .row
+        p.col-lg-4 data server:
+            label.form-control(ng-if='!editSettings') {{config.server}}
+            input.form-control(ng-show='editSettings', type='text', name='server', ng-model='config.server')
+        //- FIXME not allowed for chrome apps
+            required/>
+            <span class="error" ng-show="settingsForm.server.$error.required">Required!</span>
+        p.col-lg-4 password:
+            label.form-control(ng-if='!editSettings') *****
+            input.form-control(ng-show='editSettings', type='password', name='password', ng-model='config.password')
+            span (TODO this isn't implemented yet)
+
+    h3 App settings
+    .row
+        p.col-lg-4 status gauge max:
+            label.form-control(ng-if='!editSettings') {{config.gaugeMax}}
+            input.form-control(ng-show='editSettings', type='text', name='gaugeMax', ng-model='config.gaugeMax')
+            span (TODO this isn't implemented yet)
+    .row
+        p.col-lg-4 auto update on interval:
+            label.form-control(ng-if='!editSettings') {{config.interval}}
+            input.form-control(ng-show='editSettings', type='text', name='interval', ng-model='config.interval')
+            span (TODO this isn't implemented yet)
