@@ -185,7 +185,8 @@ angular.module('controllers', ['nvd3ChartDirectives'])
 
       $http({method: 'GET', url: $scope.config.server + '/V?mock=1'})
         .success(function (data) {
-          $scope.data = data;
+          // resolve all to the same
+          $scope.hdata = $scope.ddata = $scope.mdata = data;
         })
         .error(function () {
           // called asynchronously if an error occurs

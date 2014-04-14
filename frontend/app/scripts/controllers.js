@@ -120,7 +120,7 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
             method: "GET",
             url: $scope.config.server + "/V?mock=1"
         }).success(function(data) {
-            $scope.data = data;
+            $scope.hdata = $scope.ddata = $scope.mdata = data;
         }).error(function() {
             $scope.error = "failed to fetch data";
         });
