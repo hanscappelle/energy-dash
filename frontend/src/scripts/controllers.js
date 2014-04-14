@@ -55,7 +55,7 @@ angular.module('controllers', ['nvd3ChartDirectives', 'services'])
 
           // transform this data to the proper format expected by nvd3
           $scope.ddata = [];
-          $scope.ddata[0] = {key: 'Day Data ',
+          $scope.ddata[0] = {key: 'Day Data',
             values: []};
           for (var key in data.val) {
             $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
@@ -78,7 +78,7 @@ angular.module('controllers', ['nvd3ChartDirectives', 'services'])
 
           // transform this data to the proper format expected by nvd3
           $scope.mdata = [];
-          $scope.mdata[0] = {key: 'Month Data ',
+          $scope.mdata[0] = {key: 'Month Data',
             values: []};
           for (var key in data.val) {
             $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
@@ -160,8 +160,24 @@ angular.module('controllers', ['nvd3ChartDirectives', 'services'])
 
       $http({method: 'GET', url: $scope.config.server + '/V?mock=1'})
         .success(function (data) {
+          $scope.hdata = [];
+          $scope.hdata[0] = {key: 'Hour Data',
+            values: []};
+          $scope.ddata = [];
+          $scope.ddata[0] = {key: 'Day Data',
+            values: []};
+          $scope.mdata = [];
+          $scope.mdata[0] = {key: 'Month Data',
+            values: []};
           // resolve all to the same
-          $scope.hdata = $scope.ddata = $scope.mdata = data;
+          for (var key in data.val) {
+            if( data.val[key] === null ){
+              continue;
+            }
+            $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
+            $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
+            $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
+          }
         })
         .error(function () {
           // called asynchronously if an error occurs

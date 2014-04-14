@@ -35,7 +35,7 @@ angular.module("controllers", [ "nvd3ChartDirectives", "services" ]).controller(
         }).success(function(data) {
             $scope.ddata = [];
             $scope.ddata[0] = {
-                key: "Day Data ",
+                key: "Day Data",
                 values: []
             };
             for (var key in data.val) {
@@ -53,7 +53,7 @@ angular.module("controllers", [ "nvd3ChartDirectives", "services" ]).controller(
         }).success(function(data) {
             $scope.mdata = [];
             $scope.mdata[0] = {
-                key: "Month Data ",
+                key: "Month Data",
                 values: []
             };
             for (var key in data.val) {
@@ -102,7 +102,29 @@ angular.module("controllers", [ "nvd3ChartDirectives", "services" ]).controller(
             method: "GET",
             url: $scope.config.server + "/V?mock=1"
         }).success(function(data) {
-            $scope.hdata = $scope.ddata = $scope.mdata = data;
+            $scope.hdata = [];
+            $scope.hdata[0] = {
+                key: "Hour Data",
+                values: []
+            };
+            $scope.ddata = [];
+            $scope.ddata[0] = {
+                key: "Day Data",
+                values: []
+            };
+            $scope.mdata = [];
+            $scope.mdata[0] = {
+                key: "Month Data",
+                values: []
+            };
+            for (var key in data.val) {
+                if (data.val[key] === null) {
+                    continue;
+                }
+                $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1e3, parseFloat(data.val[key].replace(",", ".")) ]);
+                $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1e3, parseFloat(data.val[key].replace(",", ".")) ]);
+                $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1e3, parseFloat(data.val[key].replace(",", ".")) ]);
+            }
         }).error(function() {
             $scope.error = "failed to fetch data";
         });
