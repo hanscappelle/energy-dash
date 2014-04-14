@@ -48,7 +48,7 @@ angular.module('controllers', ['nvd3ChartDirectives'])
 
     $scope.updateDay = function (day) {
       $scope.selectedDay = day;
-      $http({method: 'GET', url: $scope.config.server + '/V?d=' + day + '&j=1'}).
+      $http({method: 'GET', url: $scope.config.server + '/V?d=' + day + '&j=1&full=1'}).
         success(function (data) {
           // this callback will be called asynchronously
           // when the response is available
@@ -94,7 +94,13 @@ angular.module('controllers', ['nvd3ChartDirectives'])
     // retrieve data on load
     $scope.getData();
 
-    $scope.xAxisTickFormatFunction = function () {
+    $scope.xAxisTimeFormat = function () {
+      return function (d) {
+        return new Date(d).toTimeString();
+      };
+    };
+
+    $scope.xAxisDateFormat = function () {
       return function (d) {
         return new Date(d).toUTCString();
       };

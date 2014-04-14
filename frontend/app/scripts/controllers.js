@@ -31,7 +31,7 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
         $scope.selectedDay = day;
         $http({
             method: "GET",
-            url: $scope.config.server + "/V?d=" + day + "&j=1"
+            url: $scope.config.server + "/V?d=" + day + "&j=1&full=1"
         }).success(function(data) {
             $scope.ddata = [];
             $scope.ddata[0] = {
@@ -64,7 +64,12 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
         });
     };
     $scope.getData();
-    $scope.xAxisTickFormatFunction = function() {
+    $scope.xAxisTimeFormat = function() {
+        return function(d) {
+            return new Date(d).toTimeString();
+        };
+    };
+    $scope.xAxisDateFormat = function() {
         return function(d) {
             return new Date(d).toUTCString();
         };
