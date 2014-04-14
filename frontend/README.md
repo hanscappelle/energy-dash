@@ -42,34 +42,6 @@ Use grunt for building. With grunt serve resources will be served and livereload
 
 Jshint requires 2 spaces as indents for js files to pass.
 
-### TODO
-
-* fix safari
-* enable tests again
-* deploy on heroku or provide instructions on how to deploy it there
-* create guidelines with screenshots
-
-#### nice to have
-
-* add transition effects to graphs
-
-### DONE
-
-* fix watch for scripts
-* enable jshint again
-* refine build process (check grunt file)
-* have items clickable for more detail
-* improve rendering based on screen size (+ package for mobile) => migrate to nvd3 first
-* implement several periods/scopes/resolutions for viewing data => use angular-ui-routes
-* move controllers to separate files
-* test graphs
-* create project structure
-* fix bootstrap
-* get angular en d3js scripts downloaded
-* complete data visualisation from youless-mockup, DONE for bar graph, DONE for gauge
-* store config on local storage
-* add config page for ip, port, password
-
 ## Screen layouts
 
 Mostly based on the windows app [http://apps.microsoft.com/windows/nl-nl/app/youless/bbf786d5-6b8a-4050-9026-dff3210a401f].
