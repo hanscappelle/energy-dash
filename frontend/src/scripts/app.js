@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('youlessAngularD3App', ['ngResource', 'ui.router', 'filters', 'controllers', 'directives'])
+angular.module('youlessAngularD3App', ['ui.router', 'filters', 'controllers', 'directives'])
 
   // routes configuration
   .config(function ($stateProvider, $urlRouterProvider) {
