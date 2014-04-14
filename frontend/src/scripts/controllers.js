@@ -102,7 +102,7 @@ angular.module('controllers', ['nvd3ChartDirectives'])
 
     $scope.xAxisDateFormat = function () {
       return function (d) {
-        return new Date(d).toUTCString();
+        return new Date(d).toDateString();
       };
     };
 

@@ -15,8 +15,8 @@ div(ng-controller="HistoryCtrl")
     nvd3-line-chart(
         data="hdata",
         height="400",
-        xAxisTickFormat="xAxisTickFormatFunction()",
-        showXAxis="false",
+        xAxisTickFormat="xAxisTimeFormat()",
+        showXAxis="true",
         showYAxis="true",
         xAxisRotateLabels="45")
         svg
@@ -29,10 +29,10 @@ div(ng-controller="HistoryCtrl")
     nvd3-line-chart(
         data="ddata",
         height="400",
-        xAxisTickFormat="xAxisTickFormatFunction()",
+        xAxisTickFormat="xAxisTimeFormat()",
         showXAxis="true",
         showYAxis="true",
-        xAxisRotateLabels="90")
+        xAxisRotateLabels="45")
         svg
 
     h3 Data for a month
@@ -42,9 +42,9 @@ div(ng-controller="HistoryCtrl")
     nvd3-multi-bar-chart(
         data="mdata",
         id="exampleId",
-        xAxisTickFormat="xAxisTickFormatFunction()",
+        xAxisTickFormat="xAxisDateFormat()",
         height="400",
-        showXAxis="false",
+        showXAxis="true",
         showYAxis="true",
         xAxisRotateLabels="45")
         svg

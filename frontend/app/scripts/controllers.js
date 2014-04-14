@@ -71,7 +71,7 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
     };
     $scope.xAxisDateFormat = function() {
         return function(d) {
-            return new Date(d).toUTCString();
+            return new Date(d).toDateString();
         };
     };
 }).controller("StatusCtrl", function($scope, $http) {
