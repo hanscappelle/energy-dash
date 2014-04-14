@@ -23,7 +23,7 @@ angular.module('controllers', ['nvd3ChartDirectives'])
     $scope.updateHour = function (hour) {
       $scope.selectedHour = hour;
       // debug
-      console.log('retrieving data with url $s', $scope.config.server + '/V?h=' + hour + '&j=1');
+      console.log('retrieving data with url %s', $scope.config.server + '/V?h=' + hour + '&j=1');
       // ajax
       $http({method: 'GET', url: $scope.config.server + '/V?h=' + hour + '&j=1'}).
         success(function (data) {

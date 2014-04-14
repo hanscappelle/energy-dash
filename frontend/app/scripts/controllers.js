@@ -1,4 +1,4 @@
-/*! energy-dash-frontend v0.1.0 2014-04-13 */
+/*! energy-dash-frontend v0.1.0 2014-04-14 */
 "use strict";
 
 angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl", function($scope, $http) {
@@ -10,7 +10,7 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
     };
     $scope.updateHour = function(hour) {
         $scope.selectedHour = hour;
-        console.log("retrieving data with url $s", $scope.config.server + "/V?h=" + hour + "&j=1");
+        console.log("retrieving data with url %s", $scope.config.server + "/V?h=" + hour + "&j=1");
         $http({
             method: "GET",
             url: $scope.config.server + "/V?h=" + hour + "&j=1"
