@@ -1,7 +1,7 @@
 'use strict';
 
 // all controllers go here
-angular.module('controllers', ['nvd3ChartDirectives'])
+angular.module('controllers', ['nvd3ChartDirectives', 'services'])
 
   .controller('HistoryCtrl', function ($scope, $http) {
 
@@ -133,40 +133,15 @@ angular.module('controllers', ['nvd3ChartDirectives'])
     $scope.getStatus();
   })
 
-  .controller('AppCtrl', function ($scope, $http) {
+  .controller('AppCtrl', function ($scope, $http, configService) {
+
+    // TODO proper resolving of config instead with promise
+    configService.initConfig();
 
     // TODO use ui.bootstrap for alerts instead of error that is now on scope
 
     // settings editing flag
     $scope.editSettings = false;
-
-    // the default configuration
-    $scope.config = {
-      server: 'http://localhost:3000',
-      password: ''
-    };
-
-    var initConfig = function () {
-      // packaged chrome apps version
-      if (chrome && chrome.storage && chrome.storage.local) {
-        chrome.storage.local.get('serverConfig', function (data) {
-          if (data.serverConfig) {
-            $scope.config = data.serverConfig;
-          }
-        });
-      }
-      // html5 browser version
-      else {
-        var config = JSON.parse(localStorage.getItem('serverConfig'));
-        // only set when some value found
-        if (config) {
-          $scope.config = config;
-        }
-      }
-    };
-
-    //always init config on loading of controller
-    initConfig();
 
     /**
      * helper to retrieve some dummy data
@@ -201,14 +176,7 @@ angular.module('controllers', ['nvd3ChartDirectives'])
 
     $scope.updateConfig = function () {
       // TODO add validation here
-      // save settings in local storage (chrome only?) this is the html5 approach...
-      if (chrome && chrome.storage && chrome.storage.local) {
-        chrome.storage.local.set({'serverConfig': $scope.config});
-      }
-      // html 5 browsers
-      else {
-        localStorage.setItem('serverConfig', JSON.stringify($scope.config));
-      }
+      configService.updateConfig();
       // go out of edit mode here
       $scope.editSettings = false;
     };

@@ -1,7 +1,7 @@
 /*! energy-dash-frontend v0.1.0 2014-04-14 */
 "use strict";
 
-angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl", function($scope, $http) {
+angular.module("controllers", [ "nvd3ChartDirectives", "services" ]).controller("HistoryCtrl", function($scope, $http) {
     $scope.getData = function() {
         var now = new Date();
         $scope.updateHour(now.getHours());
@@ -86,27 +86,9 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
         });
     };
     $scope.getStatus();
-}).controller("AppCtrl", function($scope, $http) {
+}).controller("AppCtrl", function($scope, $http, configService) {
+    configService.initConfig();
     $scope.editSettings = false;
-    $scope.config = {
-        server: "http://localhost:3000",
-        password: ""
-    };
-    var initConfig = function() {
-        if (chrome && chrome.storage && chrome.storage.local) {
-            chrome.storage.local.get("serverConfig", function(data) {
-                if (data.serverConfig) {
-                    $scope.config = data.serverConfig;
-                }
-            });
-        } else {
-            var config = JSON.parse(localStorage.getItem("serverConfig"));
-            if (config) {
-                $scope.config = config;
-            }
-        }
-    };
-    initConfig();
     $scope.getDummyData = function() {
         $http({
             method: "GET",
@@ -129,13 +111,7 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
         $scope.editSettings = true;
     };
     $scope.updateConfig = function() {
-        if (chrome && chrome.storage && chrome.storage.local) {
-            chrome.storage.local.set({
-                serverConfig: $scope.config
-            });
-        } else {
-            localStorage.setItem("serverConfig", JSON.stringify($scope.config));
-        }
+        configService.updateConfig();
         $scope.editSettings = false;
     };
 });
