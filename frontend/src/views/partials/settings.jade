@@ -2,15 +2,18 @@ h2 Device parameters
     button.btn.btn-primary(ng-click='enableEditSettings()', ng-if='!editSettings') Update
     button.btn.btn-primary(ng-click='updateConfig()', ng-if='editSettings') Save
 form(name='settingsForm')
-    p
-        | data server:
+    p data server:
         label(ng-if='!editSettings') {{config.server}}
         input(ng-show='editSettings', type='text', name='server', ng-model='config.server')
     //- FIXME not allowed for chrome apps
         required/>
         <span class="error" ng-show="settingsForm.server.$error.required">Required!</span>
-p
-    | password:
-    label(ng-if='!editSettings') *****
-    input(ng-show='editSettings', type='password', name='password', ng-model='config.password')
-    span (TODO this isn't implemented yet)
+    p password:
+        label(ng-if='!editSettings') *****
+        input(ng-show='editSettings', type='password', name='password', ng-model='config.password')
+        span (TODO this isn't implemented yet)
+
+    p status gauge max:
+        label(ng-if='!editSettings') {{config.gaugeMax}}
+        input(ng-show='editSettings', type='text', name='gaugeMax', ng-model='config.gaugeMax')
+        span (TODO this isn't implemented yet)

@@ -1,4 +1,4 @@
-/*! energy-dash-frontend v0.1.0 2014-04-13 */
+/*! energy-dash-frontend v0.1.0 2014-04-14 */
 "use strict";
 
 angular.module("directives", []).directive("gauge", function() {

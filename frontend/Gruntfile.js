@@ -47,7 +47,7 @@ module.exports = function (grunt) {
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       templates:{
-        files: ['src/views/*.jade'],
+        files: ['src/views/**/*.jade'],
         tasks: ['jade'],
         options: {
           livereload: true
