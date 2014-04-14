@@ -1,11 +1,11 @@
 'use strict';
 
 // all app directives in here
-angular.module('directives', [])
+angular.module('directives', ['services'])
 
   // directive for gauge meter visualisation using d3js, from
   // http://bl.ocks.org/msqr/3202712
-  .directive('gauge', function (/* dependencies go here */) {
+  .directive('gauge', function (configService) {
 
     // gauge script definition
     var gauge = function (container, configuration) {
@@ -176,7 +176,7 @@ angular.module('directives', [])
           clipWidth: 300,
           clipHeight: 300,
           ringWidth: 1,
-          maxValue: 1500,
+          maxValue: configService.getConfig().gaugeMax ? configService.getConfig().gaugeMax :1500,
           transitionMs: 4000,
           pointerWidth: 1,
           pointerTailLength: 0,

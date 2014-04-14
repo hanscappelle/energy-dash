@@ -32,8 +32,12 @@ angular.module("services", []).service("configService", function($rootScope) {
             localStorage.setItem("serverConfig", JSON.stringify($rootScope.config));
         }
     };
+    var getConfig = function() {
+        return $rootScope.config;
+    };
     return {
         initConfig: initConfig,
-        updateConfig: updateConfig
+        updateConfig: updateConfig,
+        getConfig: getConfig
     };
 });

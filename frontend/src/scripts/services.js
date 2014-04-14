@@ -44,9 +44,14 @@ angular.module('services', [])
       }
     }
 
+    var getConfig = function(){
+      return $rootScope.config;
+    }
+
     return {
       "initConfig" : initConfig,
-      "updateConfig" : updateConfig
+      "updateConfig" : updateConfig,
+      "getConfig" : getConfig
     }
 
   });

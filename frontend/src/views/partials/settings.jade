@@ -22,7 +22,6 @@ form.container-fluid(name='settingsForm')
         p.col-lg-4 status gauge max:
             label.form-control(ng-if='!editSettings') {{config.gaugeMax}}
             input.form-control(ng-show='editSettings', type='number', placeholder="1500", name='gaugeMax', ng-model='config.gaugeMax')
-            span (TODO this isn't implemented yet)
     .row
         p.col-lg-4 auto update on interval (in seconds):
             label.form-control(ng-if='!editSettings') {{config.interval}}

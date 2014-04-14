@@ -1,7 +1,7 @@
 /*! energy-dash-frontend v0.1.0 2014-04-14 */
 "use strict";
 
-angular.module("directives", []).directive("gauge", function() {
+angular.module("directives", [ "services" ]).directive("gauge", function(configService) {
     var gauge = function(container, configuration) {
         var that = {};
         var config = {
@@ -99,7 +99,7 @@ angular.module("directives", []).directive("gauge", function() {
                 clipWidth: 300,
                 clipHeight: 300,
                 ringWidth: 1,
-                maxValue: 1500,
+                maxValue: configService.getConfig().gaugeMax ? configService.getConfig().gaugeMax : 1500,
                 transitionMs: 4e3,
                 pointerWidth: 1,
                 pointerTailLength: 0,
