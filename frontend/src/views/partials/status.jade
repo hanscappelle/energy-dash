@@ -4,7 +4,6 @@ div(ng-controller="StatusCtrl")
         button.btn.btn-info(ng-click='getDummyData()') Load dummy data
         button.btn.btn-info(ng-click='extraFields=!extraFields')
             | {{extraFields?'Hide':'Show'}} all fields
-        button.btn.btn-info(ng-click='showJson=!showJson') {{showJson?'Hide':'Show'}} JSON
     .container-fluid
         .row
             .col-sm-6
@@ -28,6 +27,3 @@ div(ng-controller="StatusCtrl")
                         | Time until next status update with online monitoring: {{status.sts}}
                         br
                         | raw 10-bit light reflection level (without averaging): {{status.raw}}
-    p(ng-if='showJson')
-        | Status (raw data):
-        code {{status}}
