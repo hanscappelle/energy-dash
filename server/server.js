@@ -264,6 +264,8 @@ app.get('/V', function (req, res) {
 
   }
 
+  data.dt=60;
+
 
   // retrieve logs for given date
   logs.find({timestamp: {$gt: now.getTime(), $lt: later.getTime()}}, function (err, values) {

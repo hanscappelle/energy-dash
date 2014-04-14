@@ -21,7 +21,7 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
                 values: []
             };
             for (var key in data.val) {
-                $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
+                $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1e3, parseFloat(data.val[key].replace(",", ".")) ]);
             }
         }).error(function() {
             $scope.error = "failed to fetch data";
@@ -39,7 +39,7 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
                 values: []
             };
             for (var key in data.val) {
-                $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
+                $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1e3, parseFloat(data.val[key].replace(",", ".")) ]);
             }
         }).error(function() {
             $scope.error = "failed to fetch data";
@@ -57,7 +57,7 @@ angular.module("controllers", [ "nvd3ChartDirectives" ]).controller("HistoryCtrl
                 values: []
             };
             for (var key in data.val) {
-                $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt), parseFloat(data.val[key].replace(",", ".")) ]);
+                $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1e3, parseFloat(data.val[key].replace(",", ".")) ]);
             }
         }).error(function() {
             $scope.error = "failed to fetch data";

@@ -35,7 +35,7 @@ angular.module('controllers', ['nvd3ChartDirectives'])
           $scope.hdata[0] = {key: 'Hour Data',
             values: []};
           for (var key in data.val) {
-            $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) , parseFloat(data.val[key].replace(',', '.'))]);
+            $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
           }
         }
       ).
@@ -58,7 +58,7 @@ angular.module('controllers', ['nvd3ChartDirectives'])
           $scope.ddata[0] = {key: 'Day Data ',
             values: []};
           for (var key in data.val) {
-            $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) , parseFloat(data.val[key].replace(',', '.'))]);
+            $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
           }
         }
       ).
@@ -81,7 +81,7 @@ angular.module('controllers', ['nvd3ChartDirectives'])
           $scope.mdata[0] = {key: 'Month Data ',
             values: []};
           for (var key in data.val) {
-            $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) , parseFloat(data.val[key].replace(',', '.'))]);
+            $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
           }
         }).
         error(function () {
