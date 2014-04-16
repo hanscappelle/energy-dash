@@ -1,38 +1,43 @@
 var config = require('./config');
 
-// reading serialport, only on raspberry pi, not during development, can be ignored
-var serialport = require("serialport");
-var SerialPort = serialport.SerialPort; // localize object constructor
-
-var sp = new SerialPort(config.serialPort, {
-  baudrate: 9600,
-  parser: serialport.parsers.readline(config.parser)
-}, false); // this is the openImmediately flag [default is true]
-
 // use monk for db connection pooling
 // see https://github.com/LearnBoost/monk
 var db = require('monk')(config.databaseUrl)
   , logs = db.get('logs')
 
-sp.open(function () {
-  // debug
-  console.log('opening serial port');
-  sp.on('data', function (data) {
+// this part of the code is the serial connection
+if( !config.serveDataOnly ){
+
+  // reading serialport, only on raspberry pi, not during development, can be ignored
+  var serialport = require("serialport");
+  var SerialPort = serialport.SerialPort; // localize object constructor
+
+  var sp = new SerialPort(config.serialPort, {
+    baudrate: 9600,
+    parser: serialport.parsers.readline(config.parser)
+  }, false); // this is the openImmediately flag [default is true]
+
+  sp.open(function () {
     // debug
-    console.log('data received: ' + data);
-    // write to db
-    //console.log('write data to db');
-    logs.insert({'watts': data, 'time': new Date().getTime()}, function (err) {
-      if (err) console.log('err conn mongodb: ' + err);
-      // on suc6 we should return some response that can be checked on the client side
-    })
+    console.log('opening serial port');
+    sp.on('data', function (data) {
+      // debug
+      console.log('data received: ' + data);
+      // write to db
+      //console.log('write data to db');
+      logs.insert({'watts': data, 'time': new Date().getTime()}, function (err) {
+        if (err) console.log('err conn mongodb: ' + err);
+        // on suc6 we should return some response that can be checked on the client side
+      })
+    });
+    sp.write("ls\n", function (err, results) {
+      console.log('err: ' + err);
+      if (results)
+        console.log('results: ' + results);
+    });
   });
-  sp.write("ls\n", function (err, results) {
-    console.log('err: ' + err);
-    if (results)
-      console.log('results: ' + results);
-  });
-});
+
+}
 
 // let's use this service also for serving all this data
 var express = require('express');
@@ -74,6 +79,8 @@ http.createServer(app).listen(config.port, function () {
 });
 
 // some route definitions go here
+
+// TODO take youlessCompatible config option into account here to optimize data when this is not set
 
 // get status
 app.get('/a', function (req, res) {
