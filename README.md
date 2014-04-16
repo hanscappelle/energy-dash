@@ -15,9 +15,7 @@ Energy Monitoring Dashboard with youless API support
 * check in v 0.1.0 and tag it
 * fix safari
 * enable tests again
-* deploy on heroku or provide instructions on how to deploy it there
 * create guidelines with screenshots
-* deploy on heroku
 * add j param to youless urls
 * check security youless 
 * add null termination youless
@@ -28,6 +26,7 @@ Energy Monitoring Dashboard with youless API support
 
 ## DONE
 
+* deploy on heroku or provide instructions on how to deploy it there
 * provide local storage config in frontend
 * create controls for resolutions, use http://www.yearofmoo.com/2012/10/more-angularjs-magic-to-supercharge-your-webapp.html#more-about-loops
 * fix watch for scripts
