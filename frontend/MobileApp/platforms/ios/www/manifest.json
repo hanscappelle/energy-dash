@@ -1,1 +1,0 @@
-{"name":"Youless Chrome App","version":"0.1.0","manifest_version":2,"minimum_chrome_version":"29","app":{"background":{"scripts":["scripts/background.js"]}},"permissions":["<all_urls>","storage"],"packageId":"com.your.company.HelloWorld","versionCode":1,"CFBundleVersion":"1.1.1"}
