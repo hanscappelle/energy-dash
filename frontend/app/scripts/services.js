@@ -1,4 +1,4 @@
-/*! energy-dash-frontend v0.1.0 2014-04-14 */
+/*! energy-dash-frontend v0.1.0 2014-04-16 */
 "use strict";
 
 angular.module("services", []).service("configService", function($rootScope) {

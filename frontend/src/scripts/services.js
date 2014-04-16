@@ -42,16 +42,16 @@ angular.module('services', [])
       else {
         localStorage.setItem('serverConfig', JSON.stringify($rootScope.config));
       }
-    }
+    };
 
     var getConfig = function(){
       return $rootScope.config;
-    }
+    };
 
     return {
-      "initConfig" : initConfig,
-      "updateConfig" : updateConfig,
-      "getConfig" : getConfig
-    }
+      'initConfig' : initConfig,
+      'updateConfig' : updateConfig,
+      'getConfig' : getConfig
+    };
 
   });
