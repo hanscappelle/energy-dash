@@ -13,6 +13,10 @@ Energy Monitoring Dashboard with youless API support
 
 * make youless optional (on by default though)
 * check in v 0.1.0 and tag it
+* deploy on heroku
+* add j param to youless urls
+* check security youless 
+* add null termination youless
 
 ### nice to have
 
