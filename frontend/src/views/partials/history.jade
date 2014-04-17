@@ -3,11 +3,19 @@ div(ng-controller="HistoryCtrl")
     h2 History Graph
         button.btn.btn-primary(ng-click='getData()') Reload data
 
-    //-p TODO make toggle button for hour, day, month
+    //-
+        ul.nav.nav-tabs
+            li.active
+                a(href="#/history#hour", data-toggle="tab") Hour
+            li
+                a(href="#/history#day", data-toggle="tab") Day
+            li
+                a(href="#/history#month", data-toggle="tab") Month
 
-    h3 Data for one hour
+        .tab-content
+            .tab-pane.active#hour
 
-    //- easy way of setting a selectable range
+    git c//- easy way of setting a selectable range
     .btn.btn-default(ng-repeat="n in [] | range:24", ng-click="updateHour($index)", ng-class='{active: $index==selectedHour}') {{$index+1}}
 
     nvd3-line-chart(
@@ -19,7 +27,7 @@ div(ng-controller="HistoryCtrl")
         xAxisRotateLabels="45")
         svg
 
-    h3 Data for a day
+    //.tab-pane#day
 
     //- FIXME nr of days in month
     .btn.btn-default(ng-repeat="n in [] | range:31", ng-click="updateDay($index)", ng-class='{active: $index==selectedDay}') {{$index+1}}
@@ -33,7 +41,7 @@ div(ng-controller="HistoryCtrl")
         xAxisRotateLabels="45")
         svg
 
-    h3 Data for a month
+    //.tab-pane#month
 
     .btn.btn-default(ng-repeat="n in [] | range:12", ng-click="updateMonth($index)", ng-class='{active: $index==selectedMonth}') {{$index+1}}
 
