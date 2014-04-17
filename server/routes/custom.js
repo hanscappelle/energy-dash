@@ -126,8 +126,53 @@ var routes = function (app) {
 
       // here we have to concatenate some data to show data per day
 
-      // TODO
+      var data = [];
+      data[0] = {key: 'Month Data',
+        values: []};
+
+      // fetch the data
+      logs.find({timestamp: {$gt: now.getTime(), $lt: later.getTime()}}, function (err, values) {
+        if (err)
+          throw err;
+
+        // for concatentation
+        var currentDate, previousDate, total = 0;
+
+        for (var key in values) {
+          // we need to respect the youless format...
+          var watts = parseFloat(values[key].watts);
+          if (watts != NaN && watts){
+
+            // and populate it
+            //data[0].values.push([ values[key].timestamp, watts]);
+
+            // concatenation here
+            currentDate = new Date(values[key].timestamp);
+            if (previousDate && currentDate.getDate() != previousDate.getDate()) {
+              // another hour has passed just append the data
+              data[0].values.push([ values[key].timestamp, total]);
+              // start counting again
+              total = watts;
+            }
+            // otherwise we can combine the values
+            else {
+              total += watts;
+            }
+          }
+          previousDate = currentDate;
+        }
+        // if still some watts left add these to
+        if (total > 0 ) {
+          data[0].values.push([ values[key].timestamp, total]);
+        }
+        // send the result
+        res.send(data);
+        return;
+
+      });
     }
+
+    res.send("non supported params");
   });
 
 }
