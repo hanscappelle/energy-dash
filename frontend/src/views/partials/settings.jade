@@ -17,6 +17,10 @@ form.container-fluid(name='settingsForm')
             input.form-control(ng-show='editSettings', type='password', name='password', ng-model='config.password')
             span (TODO this isn't implemented yet)
 
+        p.col-lg-4 Youless compatible:
+            input(ng-disabled='!editSettings', type='checkbox', name='youlessCompatible', ng-model='config.youlessCompatible')
+
+
     h3 App settings
     .row
         p.col-lg-4 status gauge max:

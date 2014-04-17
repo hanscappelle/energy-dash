@@ -31,7 +31,7 @@ angular.module("controllers", [ "nvd3ChartDirectives", "services" ]).controller(
         $scope.selectedDay = day;
         $http({
             method: "GET",
-            url: $scope.config.server + "/V?d=" + day + "&j=1&full=1"
+            url: $scope.config.server + "/V?d=" + day + "&j=1"
         }).success(function(data) {
             $scope.ddata = [];
             $scope.ddata[0] = {

@@ -48,7 +48,7 @@ angular.module('controllers', ['nvd3ChartDirectives', 'services'])
 
     $scope.updateDay = function (day) {
       $scope.selectedDay = day;
-      $http({method: 'GET', url: $scope.config.server + '/V?d=' + day + '&j=1&full=1'}).
+      $http({method: 'GET', url: $scope.config.server + '/V?d=' + day + '&j=1'}).
         success(function (data) {
           // this callback will be called asynchronously
           // when the response is available
