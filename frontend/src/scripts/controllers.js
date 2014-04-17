@@ -118,8 +118,7 @@ angular.module('controllers', ['nvd3ChartDirectives', 'services'])
       };
     };
 
-  }
-)
+  })
 
   .
   controller('StatusCtrl', function ($scope, $http) {
