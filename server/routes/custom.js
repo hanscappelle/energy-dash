@@ -172,7 +172,6 @@ var routes = function (app) {
       });
     }
 
-    res.send("non supported params");
   });
 
 }
