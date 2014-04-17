@@ -11,9 +11,9 @@ Energy Monitoring Dashboard with youless API support
 
 ## TODO
 
-* fix safari
 * enable tests again
 * improve gui controls for date selection
+* implement time zone correction
 
 * make tabs for the different resolutions
 
@@ -23,6 +23,10 @@ Energy Monitoring Dashboard with youless API support
 * data compare in graph: http://cmaurer.github.io/angularjs-nvd3-directives/stacked.area.chart.html
 
 ## Version History
+
+### Upcoming
+
+* fix safari
 
 ### v0.1.0
 
