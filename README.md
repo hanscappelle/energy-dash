@@ -11,20 +11,27 @@ Energy Monitoring Dashboard with youless API support
 
 ## TODO
 
-* make youless optional (on by default though)
-* check in v 0.1.0 and tag it
 * fix safari
 * enable tests again
-* create guidelines with screenshots
+* improve gui controls for date selection
+
+* make youless optional (on by default though)
 * add j param to youless urls
-* check security youless 
-* add null termination youless
+* make tabs for the different resolutions
 
 ### nice to have
 
+* youless security, for details check: https://bitbucket.org/magic_monkey/youless/raw/3480eb99e2e29d8ca142f3cccef5c2d4eb26fccf/classes/request.class.php
 * data compare in graph: http://cmaurer.github.io/angularjs-nvd3-directives/stacked.area.chart.html
 
-## DONE
+## Version History
+
+### v0.1.0
+
+* check in v 0.1.0 and tag it
+* add null termination youless
+
+### dev
 
 * deploy on heroku or provide instructions on how to deploy it there
 * provide local storage config in frontend
