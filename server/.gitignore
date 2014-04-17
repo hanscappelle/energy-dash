@@ -1,2 +1,6 @@
+
+# if checking in on heroku it's advised to provide these dependencies also so remove this ignore then
 node_modules
+
+# let's keep my production config personal
 config/production.js

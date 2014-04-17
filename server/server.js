@@ -106,10 +106,6 @@ app.get('/V', function (req, res) {
     return;
   }
 
-  // real data
-
-  // TODO better alignment wit youless formats? Or at least merge youless formats here, have youless api comp as flag configurable on both ends
-
   // h for all results of one hour of day
   if (req.query.h) {
     var hour = req.query.h;
@@ -123,6 +119,7 @@ app.get('/V', function (req, res) {
     var later = new Date(now);
     later.setHours(now.getHours() + 1);
 
+    // FIXME check data ranges
     console.log("getting data from %s to %s", now.toUTCString(), later.toUTCString());
 
     // prepare data
@@ -141,7 +138,7 @@ app.get('/V', function (req, res) {
 
     var day = req.query.d;
 
-    var now = new Date(); // TODO shouldn't we be able to resolve from other days too? use d param combined here?
+    var now = new Date();
     now.setDate(day)
     now.setHours(0)
     now.setMinutes(0)
@@ -155,51 +152,10 @@ app.get('/V', function (req, res) {
 
     // prepare data
     var data = {
-      un: "kWh", // TODO consider using another unit here, will all be 0.xxx anyway
+      un: "kWh",
       tm: now.toISOString(),
       dt: 3600, //hour interval
       val: []
-    }
-
-    // full detail option
-    if (!req.query.full) {
-
-      // retrieve logs for given date
-      logs.find({timestamp: {$gt: now.getTime(), $lt: later.getTime()}}, function (err, values) {
-
-        if (err)
-          throw err;
-
-        var currentDate, previousDate, total = 0;
-        for (var key in values) {
-          // try parsing as float first
-          var watts = parseFloat(values[key].watts);
-          // should at least be a valid value
-          if (watts != NaN && watts) {
-            // combine readings into one hour interval
-            currentDate = new Date(values[key].timestamp);
-            if (previousDate && currentDate.getHours() != previousDate.getHours()) {
-              // another hour has passed just reset
-              data.val.push((total + "").replace(".", ","));  // all this shouldn't be needed
-              // start counting again
-              total = parseFloat(values[key].watts);
-            }
-            // otherwise we can combine the values
-            else {
-              total += parseFloat(values[key].watts);
-            }
-
-          }
-          previousDate = currentDate;
-        }
-        // if still some watts left add these to
-        if (total) {
-          data.val.push((total + "").replace(".", ","));
-        }
-        res.send(data);
-      });
-      return;
-
     }
   }
 
@@ -208,7 +164,7 @@ app.get('/V', function (req, res) {
 
     var month = req.query.m;
 
-    var now = new Date(); // TODO shouldn't we be able to resolve from other days too? use d param combined here?
+    var now = new Date();
     now.setMonth(month);
     now.setDate(1)
     now.setHours(0)
@@ -223,56 +179,15 @@ app.get('/V', function (req, res) {
 
     // prepare data
     var data = {
-      un: "kWh", // TODO consider using another unit here, will all be 0.xxx anyway
+      un: "kWh",
       tm: now.toISOString(),
       dt: 86400, //day interval
       val: []
     }
-
-    if (!req.query.full) {
-      // retrieve logs for given date
-      logs.find({timestamp: {$gt: now.getTime(), $lt: later.getTime()}}, function (err, values) {
-
-        if (err)
-          throw err;
-
-        var currentDate, previousDate, total = 0;
-        for (var key in values) {
-          // try parsing as float first
-          var watts = parseFloat(values[key].watts);
-          // should at least be a valid value
-          if (watts != NaN && watts) {
-            // combine readings into one hour interval
-            currentDate = new Date(values[key].timestamp);
-            if (previousDate && currentDate.getDate() != previousDate.getDate()) {
-              // another hour has passed just reset
-              data.val.push((total + "").replace(".", ","));  // all this shouldn't be needed
-              // start counting again
-              total = parseFloat(values[key].watts);
-            }
-            // otherwise we can combine the values
-            else {
-              total += parseFloat(values[key].watts);
-            }
-
-          }
-          previousDate = currentDate;
-        }
-        // if still some watts left add these to
-        if (total) {
-          data.val.push((total + "").replace(".", ","));
-        }
-
-        res.send(data);
-      });
-
-      return;
-    }
-
   }
 
+  // this server will be returning data with a 60 seconds interval when in youless compatible format
   data.dt=60;
-
 
   // retrieve logs for given date
   logs.find({timestamp: {$gt: now.getTime(), $lt: later.getTime()}}, function (err, values) {
@@ -286,13 +201,10 @@ app.get('/V', function (req, res) {
       //data.val.push(watts);
         data.val.push((watts + "").replace(".", ","));  // all this shouldn't be needed
     }
+    // always finish with null termination
+    data.val.push(null);
+    // send the result
     res.send(data);
   });
-
-  return;
-
-
-  //res.send("failed");
-
 
 })

@@ -1,4 +1,4 @@
-/*! energy-dash-frontend v0.1.0 2014-04-16 */
+/*! energy-dash-frontend v0.1.0 2014-04-17 */
 "use strict";
 
 chrome.app.runtime.onLaunched.addListener(function() {
