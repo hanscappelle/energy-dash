@@ -11,7 +11,7 @@ angular.module("services", []).service("configService", function($rootScope) {
         youlessCompatible: true
     };
     var initConfig = function() {
-        if (chrome && chrome.storage && chrome.storage.local) {
+        if (typeof chrome === "object" && chrome.storage && chrome.storage.local) {
             chrome.storage.local.get("serverConfig", function(data) {
                 if (data.serverConfig) {
                     $rootScope.config = data.serverConfig;
@@ -25,7 +25,7 @@ angular.module("services", []).service("configService", function($rootScope) {
         }
     };
     var updateConfig = function() {
-        if (chrome && chrome.storage && chrome.storage.local) {
+        if (typeof chrome === "object" && chrome.storage && chrome.storage.local) {
             chrome.storage.local.set({
                 serverConfig: $rootScope.config
             });

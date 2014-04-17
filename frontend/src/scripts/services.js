@@ -17,7 +17,7 @@ angular.module('services', [])
 
     var initConfig = function () {
       // packaged chrome apps version
-      if (chrome && chrome.storage && chrome.storage.local) {
+      if (typeof chrome === 'object' && chrome.storage && chrome.storage.local) {
         chrome.storage.local.get('serverConfig', function (data) {
           if (data.serverConfig) {
             $rootScope.config = data.serverConfig;
@@ -36,7 +36,7 @@ angular.module('services', [])
 
     var updateConfig = function(){
       // save settings in local storage (chrome only?) this is the html5 approach...
-      if (chrome && chrome.storage && chrome.storage.local) {
+      if (typeof chrome === 'object' && chrome.storage && chrome.storage.local) {
         chrome.storage.local.set({'serverConfig': $rootScope.config});
       }
       // html 5 browsers
