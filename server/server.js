@@ -6,7 +6,7 @@ var db = require('monk')(config.databaseUrl)
   , logs = db.get('logs')
 
 // this part of the code is the serial connection
-if( !config.serveDataOnly ){
+if (!config.serveDataOnly) {
 
   // reading serialport, only on raspberry pi, not during development, can be ignored
   var serialport = require("serialport");
@@ -157,6 +157,48 @@ app.get('/V', function (req, res) {
       dt: 3600, //hour interval
       val: []
     }
+
+    // try to concatenate some of our data
+
+    // retrieve logs for given date
+    logs.find({timestamp: {$gt: now.getTime(), $lt: later.getTime()}}, function (err, values) {
+
+      if (err)
+        throw err;
+
+      var currentDate, previousDate, total = 0;
+      for (var key in values) {
+        // try parsing as float first
+        var watts = parseFloat(values[key].watts);
+        // should at least be a valid value
+        if (watts != NaN && watts) {
+          // combine readings into one hour interval
+          currentDate = new Date(values[key].timestamp);
+          if (previousDate && currentDate.getHours() != previousDate.getHours()) {
+            // another hour has passed just reset
+            data.val.push((total + "").replace(".", ","));  // all this shouldn't be needed
+            // start counting again
+            total = parseFloat(values[key].watts);
+          }
+          // otherwise we can combine the values
+          else {
+            total += parseFloat(values[key].watts);
+          }
+
+        }
+        previousDate = currentDate;
+      }
+      // if still some watts left add these to
+      if (total) {
+        data.val.push((total + "").replace(".", ","));
+      }
+      // always finish with null termination
+      data.val.push(null);
+      // send the result
+      res.send(data);
+    });
+    return;
+
   }
 
   // m param for month resolution
@@ -184,10 +226,52 @@ app.get('/V', function (req, res) {
       dt: 86400, //day interval
       val: []
     }
+
+    // concatenate the month data somewat
+    // retrieve logs for given date
+    logs.find({timestamp: {$gt: now.getTime(), $lt: later.getTime()}}, function (err, values) {
+
+      if (err)
+        throw err;
+
+      var currentDate, previousDate, total = 0;
+      for (var key in values) {
+        // try parsing as float first
+        var watts = parseFloat(values[key].watts);
+        // should at least be a valid value
+        if (watts != NaN && watts) {
+          // combine readings into one hour interval
+          currentDate = new Date(values[key].timestamp);
+          if (previousDate && currentDate.getDate() != previousDate.getDate()) {
+            // another hour has passed just reset
+            data.val.push((total + "").replace(".", ","));  // all this shouldn't be needed
+            // start counting again
+            total = parseFloat(values[key].watts);
+          }
+          // otherwise we can combine the values
+          else {
+            total += parseFloat(values[key].watts);
+          }
+
+        }
+        previousDate = currentDate;
+      }
+      // if still some watts left add these to
+      if (total) {
+        data.val.push((total + "").replace(".", ","));
+      }
+      // always finish with null termination
+      data.val.push(null);
+      // send the result
+      res.send(data);
+    });
+
+    return;
   }
 
   // this server will be returning data with a 60 seconds interval when in youless compatible format
-  data.dt=60;
+  // nog longer needed, was only for the extra full param
+  // data.dt = 60;
 
   // retrieve logs for given date
   logs.find({timestamp: {$gt: now.getTime(), $lt: later.getTime()}}, function (err, values) {
