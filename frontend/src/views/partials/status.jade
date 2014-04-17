@@ -1,7 +1,6 @@
 div(ng-controller="StatusCtrl")
     h2 Status
         button.btn.btn-primary(ng-click='getStatus()') Fetch status
-        button.btn.btn-info(ng-click='getDummyData()') Load dummy data
         button.btn.btn-info(ng-click='extraFields=!extraFields')
             | {{extraFields?'Hide':'Show'}} all fields
     .container-fluid
