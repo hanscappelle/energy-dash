@@ -15,7 +15,7 @@ div(ng-controller="HistoryCtrl")
         .tab-content
             .tab-pane.active#hour
 
-    git c//- easy way of setting a selectable range
+    //- easy way of setting a selectable range
     .btn.btn-default(ng-repeat="n in [] | range:24", ng-click="updateHour($index)", ng-class='{active: $index==selectedHour}') {{$index+1}}
 
     nvd3-line-chart(
