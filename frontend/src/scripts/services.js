@@ -11,7 +11,8 @@ angular.module('services', [])
       password: '',
       gaugeMax : 1500,
       interval : 60,
-      timec : 1
+      timec : 1,
+      youlessCompatible : true
     };
 
     var initConfig = function () {

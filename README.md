@@ -15,8 +15,8 @@ Energy Monitoring Dashboard with youless API support
 * enable tests again
 * improve gui controls for date selection
 
-* make youless optional (on by default though)
 * make tabs for the different resolutions
+* remove dummy data options
 
 ### nice to have
 
@@ -27,6 +27,7 @@ Energy Monitoring Dashboard with youless API support
 
 ### v0.1.0
 
+* make youless optional (on by default though)
 * check in v 0.1.0 and tag it
 * add null termination youless
 * add j param to youless urls (needed in frontend only, our backend ignores)

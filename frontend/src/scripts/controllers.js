@@ -27,15 +27,19 @@ angular.module('controllers', ['nvd3ChartDirectives', 'services'])
       // ajax
       $http({method: 'GET', url: $scope.config.server + '/V?h=' + hour + '&j=1'}).
         success(function (data) {
-          // this callback will be called asynchronously
-          // when the response is available
 
           // transform this data to the proper format expected by nvd3
-          $scope.hdata = [];
-          $scope.hdata[0] = {key: 'Hour Data',
-            values: []};
-          for (var key in data.val) {
-            $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
+          if ($scope.config.youlessCompatible) {
+            $scope.hdata = [];
+            $scope.hdata[0] = {key: 'Hour Data',
+              values: []};
+            for (var key in data.val) {
+              $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
+            }
+          }
+          // otherwise we provided the data in the proper format
+          else {
+            $scope.hdata = data;
           }
         }
       ).
@@ -50,15 +54,19 @@ angular.module('controllers', ['nvd3ChartDirectives', 'services'])
       $scope.selectedDay = day;
       $http({method: 'GET', url: $scope.config.server + '/V?d=' + day + '&j=1'}).
         success(function (data) {
-          // this callback will be called asynchronously
-          // when the response is available
 
           // transform this data to the proper format expected by nvd3
-          $scope.ddata = [];
-          $scope.ddata[0] = {key: 'Day Data',
-            values: []};
-          for (var key in data.val) {
-            $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
+          if ($scope.config.youlessCompatible) {
+            $scope.ddata = [];
+            $scope.ddata[0] = {key: 'Day Data',
+              values: []};
+            for (var key in data.val) {
+              $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
+            }
+          }
+          // otherwise we provided the data in the proper format
+          else {
+            $scope.ddata = data;
           }
         }
       ).
@@ -73,15 +81,19 @@ angular.module('controllers', ['nvd3ChartDirectives', 'services'])
       $scope.selectedMonth = month;
       $http({method: 'GET', url: $scope.config.server + '/V?m=' + month + '&j=1'}).
         success(function (data) {
-          // this callback will be called asynchronously
-          // when the response is available
 
           // transform this data to the proper format expected by nvd3
-          $scope.mdata = [];
-          $scope.mdata[0] = {key: 'Month Data',
-            values: []};
-          for (var key in data.val) {
-            $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
+          if ($scope.config.youlessCompatible) {
+            $scope.mdata = [];
+            $scope.mdata[0] = {key: 'Month Data',
+              values: []};
+            for (var key in data.val) {
+              $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);
+            }
+          }
+          // otherwise we provided the data in the proper format
+          else {
+            $scope.mdata = data;
           }
         }).
         error(function () {
@@ -106,9 +118,11 @@ angular.module('controllers', ['nvd3ChartDirectives', 'services'])
       };
     };
 
-  })
+  }
+)
 
-  .controller('StatusCtrl', function ($scope, $http) {
+  .
+  controller('StatusCtrl', function ($scope, $http) {
 
     /**
      * get status from REST interface
@@ -159,6 +173,7 @@ angular.module('controllers', ['nvd3ChartDirectives', 'services'])
         });
 
       $http({method: 'GET', url: $scope.config.server + '/V?mock=1'})
+        // FIXME this ain't working
         .success(function (data) {
           $scope.hdata = [];
           $scope.hdata[0] = {key: 'Hour Data',
@@ -171,7 +186,7 @@ angular.module('controllers', ['nvd3ChartDirectives', 'services'])
             values: []};
           // resolve all to the same
           for (var key in data.val) {
-            if( data.val[key] === null ){
+            if (data.val[key] === null) {
               continue;
             }
             $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1000 , parseFloat(data.val[key].replace(',', '.'))]);

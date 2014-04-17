@@ -24,7 +24,7 @@ var routes = function (app) {
     }
   })
 
-// get actual values
+  // get actual values
   app.get('/V', function (req, res) {
 
     // debug response
@@ -56,7 +56,6 @@ var routes = function (app) {
         dt: 60, //minute interval
         val: []
       }
-
 
     }
 

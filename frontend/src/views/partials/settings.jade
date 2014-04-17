@@ -13,9 +13,10 @@ form.container-fluid(name='settingsForm')
             required/>
             <span class="error" ng-show="settingsForm.server.$error.required">Required!</span>
         p.col-lg-4 password:
+            span (TODO this isn't implemented yet)
             label.form-control(ng-if='!editSettings') *****
             input.form-control(ng-show='editSettings', type='password', name='password', ng-model='config.password')
-            span (TODO this isn't implemented yet)
+
 
         p.col-lg-4 Youless compatible:
             input(ng-disabled='!editSettings', type='checkbox', name='youlessCompatible', ng-model='config.youlessCompatible')
@@ -28,15 +29,16 @@ form.container-fluid(name='settingsForm')
             input.form-control(ng-show='editSettings', type='number', placeholder="1500", name='gaugeMax', ng-model='config.gaugeMax')
     .row
         p.col-lg-4 auto update on interval (in seconds):
+            span (TODO this isn't implemented yet)
             label.form-control(ng-if='!editSettings') {{config.interval}}
             input.form-control(ng-show='editSettings', type='number', placeholder="60", name='interval', ng-model='config.interval')
-            span (TODO this isn't implemented yet)
+
 
     .row
         p.col-lg-4 time correction (in hours):
+            span (TODO this isn't implemented yet)
             label.form-control(ng-if='!editSettings') {{config.timec}}
             input.form-control(ng-show='editSettings', type='number', placeholder="1", name='timec', ng-model='config.timec')
-            span (TODO this isn't implemented yet)
 
 h3 About
 

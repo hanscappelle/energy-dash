@@ -7,7 +7,8 @@ angular.module("services", []).service("configService", function($rootScope) {
         password: "",
         gaugeMax: 1500,
         interval: 60,
-        timec: 1
+        timec: 1,
+        youlessCompatible: true
     };
     var initConfig = function() {
         if (chrome && chrome.storage && chrome.storage.local) {

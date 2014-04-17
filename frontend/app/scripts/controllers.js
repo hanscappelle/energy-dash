@@ -15,13 +15,17 @@ angular.module("controllers", [ "nvd3ChartDirectives", "services" ]).controller(
             method: "GET",
             url: $scope.config.server + "/V?h=" + hour + "&j=1"
         }).success(function(data) {
-            $scope.hdata = [];
-            $scope.hdata[0] = {
-                key: "Hour Data",
-                values: []
-            };
-            for (var key in data.val) {
-                $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1e3, parseFloat(data.val[key].replace(",", ".")) ]);
+            if ($scope.config.youlessCompatible) {
+                $scope.hdata = [];
+                $scope.hdata[0] = {
+                    key: "Hour Data",
+                    values: []
+                };
+                for (var key in data.val) {
+                    $scope.hdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1e3, parseFloat(data.val[key].replace(",", ".")) ]);
+                }
+            } else {
+                $scope.hdata = data;
             }
         }).error(function() {
             $scope.error = "failed to fetch data";
@@ -33,13 +37,17 @@ angular.module("controllers", [ "nvd3ChartDirectives", "services" ]).controller(
             method: "GET",
             url: $scope.config.server + "/V?d=" + day + "&j=1"
         }).success(function(data) {
-            $scope.ddata = [];
-            $scope.ddata[0] = {
-                key: "Day Data",
-                values: []
-            };
-            for (var key in data.val) {
-                $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1e3, parseFloat(data.val[key].replace(",", ".")) ]);
+            if ($scope.config.youlessCompatible) {
+                $scope.ddata = [];
+                $scope.ddata[0] = {
+                    key: "Day Data",
+                    values: []
+                };
+                for (var key in data.val) {
+                    $scope.ddata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1e3, parseFloat(data.val[key].replace(",", ".")) ]);
+                }
+            } else {
+                $scope.ddata = data;
             }
         }).error(function() {
             $scope.error = "failed to fetch data";
@@ -51,13 +59,17 @@ angular.module("controllers", [ "nvd3ChartDirectives", "services" ]).controller(
             method: "GET",
             url: $scope.config.server + "/V?m=" + month + "&j=1"
         }).success(function(data) {
-            $scope.mdata = [];
-            $scope.mdata[0] = {
-                key: "Month Data",
-                values: []
-            };
-            for (var key in data.val) {
-                $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1e3, parseFloat(data.val[key].replace(",", ".")) ]);
+            if ($scope.config.youlessCompatible) {
+                $scope.mdata = [];
+                $scope.mdata[0] = {
+                    key: "Month Data",
+                    values: []
+                };
+                for (var key in data.val) {
+                    $scope.mdata[0].values.push([ new Date(data.tm).getTime() + key * parseInt(data.dt) * 1e3, parseFloat(data.val[key].replace(",", ".")) ]);
+                }
+            } else {
+                $scope.mdata = data;
             }
         }).error(function() {
             $scope.error = "failed to fetch data";
