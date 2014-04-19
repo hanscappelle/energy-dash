@@ -14,12 +14,11 @@ Energy Monitoring Dashboard with youless API support
 * enable tests again
 * improve gui controls for date selection
 * implement time zone correction
-
 * make tabs for the different resolutions
 
 ### nice to have
 
-* youless security, for details check: https://bitbucket.org/magic_monkey/youless/raw/3480eb99e2e29d8ca142f3cccef5c2d4eb26fccf/classes/request.class.php
+* youless security, for details check: https://bitbucket.org/magic_monkey/youless/raw/3480eb99e2e29d8ca142f3cccef5c2d4eb26fccf/classes/request.class.php and this dutch response about the proper sequence: http://gathering.tweakers.net/forum/list_message/42102865#42102865
 * data compare in graph: http://cmaurer.github.io/angularjs-nvd3-directives/stacked.area.chart.html
 
 ## Version History
