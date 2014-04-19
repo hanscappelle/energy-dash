@@ -23,7 +23,7 @@ Energy Monitoring Dashboard with youless API support
 
 ## Version History
 
-### Upcoming
+### Upcoming (ready in dev, just not tagged yet)
 
 * fix safari
 
