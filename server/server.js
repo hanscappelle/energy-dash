@@ -25,7 +25,7 @@ if (!config.serveDataOnly) {
       console.log('data received: ' + data);
       // write to db
       //console.log('write data to db');
-      logs.insert({'watts': data, 'time': new Date().getTime()}, function (err) {
+      logs.insert({'watts': data, 'timestamp': new Date().getTime()}, function (err) {
         if (err) console.log('err conn mongodb: ' + err);
         // on suc6 we should return some response that can be checked on the client side
       })
